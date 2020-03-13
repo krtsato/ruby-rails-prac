@@ -102,8 +102,8 @@ Password: **********
     - rrp-web-cont
     - rrp-db-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://example.com:3000](*)
-    - [http://rrp.example.com:3000](*)
+    - [http://example.com:3000](http://example.com:3000)
+    - [http://rrp.example.com:3000](http://rrp.example.com:3000)
 
 ```zsh
 # web サーバを起動する
