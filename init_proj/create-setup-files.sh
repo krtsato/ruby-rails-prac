@@ -279,6 +279,7 @@ EOF
 create_config_init_blocked_hosts() {
   cat <<EOF > config/initializers/blocked_hosts.rb
 Rails.application.configure do
+  config.hosts << "localhost"
   config.hosts << ENV["CUSTOMER_HOST_NAME"]
   config.hosts << ENV["STAFF_HOST_NAME"]
 end
