@@ -24,7 +24,7 @@ docker-compose run --rm web bash -c \
 && yarn check \
 && bundle exec rails db:create \
 && bundle exec rails g rspec:install \
-&& bundle exec rubocop -a --auto-gen-config"
+&& bundle exec rubocop --auto-gen-config"
 
 # Setup additional files after rails new
 append_config_env_dev

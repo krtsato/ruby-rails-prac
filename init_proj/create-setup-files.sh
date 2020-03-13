@@ -185,6 +185,9 @@ create_gitignore() {
 !/log/.keep
 !/tmp/.keep
 
+/yarn-error.log
+yarn-debug.log*
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
@@ -200,9 +203,8 @@ create_gitignore() {
 /public/packs
 /public/packs-test
 /node_modules
-/yarn-error.log
-yarn-debug.log*
 .yarn-integrity
+.markdown.yml
 
 EOF
 }

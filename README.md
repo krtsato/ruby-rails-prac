@@ -1,24 +1,108 @@
-# README
+# ruby-rails-prac
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+※現在開発途中のため書きかけです．
 
-Things you may want to cover:
+Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
+成果物から得られること
 
-* Ruby version
+- チュートリアル以上の実践的な Rails の使い方
+- RSpec, Capybara を用いたテストコードの書き方
+- ワンコマンドで環境構築を完了させるスクリプト群
+- 随時追加
 
-* System dependencies
+<br>
 
-* Configuration
+- [機能](#機能)
+- [環境](#環境)
+- [環境構築](#環境構築)
 
-* Database creation
+<br>
 
-* Database initialization
+## 機能
 
-* How to run the test suite
+- 随時追加
+- タスク は [Issue](https://github.com/krtsato/ruby-rails-prac/issues) で管理する
 
-* Services (job queues, cache servers, search engines, etc.)
+<br>
 
-* Deployment instructions
+## 環境
 
-* ...
+- Docker
+- Ruby
+- Rails
+- PostgreSQL
+- RSpec
+- Cappybara
+- RuboCop
+- Webpacker
+- jQuery
+- ERB
+
+フロントエンドは今回の学習範囲に含めないため jQuery のコピペで済ませる．なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
+
+<br>
+
+## 環境構築
+
+- 要件
+  - init_proj 配下のシェルスクリプト
+  - リポジトリに含まれない .env ファイル
+  - ２種類のシェル
+    - zsh : ホストマシン側
+    - bash : コンテナ側
+    - 普段は zsh を使うが Docker 内で Linux 標準の bash を動かしたかった
+
+- 注意
+  - アプリの性質上 macOS における /etc/hosts に追記する
+    - ローカルで稼働させない場合は追記箇所を削除する
+    - ルート権限を行使するため，シェルスクリプトが一時停止したときパスワードを入力する
+
+- 実行内容
+  - create-setup-files.sh
+    - 各種設定ファイルを生成する
+      - Docker 関連
+      - RuboCop 関連
+      - config/ 配下の一部ファイル
+      - Gemfile
+      - Rakefile
+      - .gitignore
+  - create-rc-files
+    - コンテナのホームディレクトリに rc ファイルを生成する
+      - .gemrc
+      - .psqlrc
+    - Dockerfile 内で実行される
+  - setup.sh
+    - 環境構築のメインスレッド
+      - bundle install
+      - rails new
+      - yarn check
+      - rails db:create
+      - rails g rspec:install
+      - rubocop --auto
+      - 最終的に start-rails-server.sh を呼び出す
+  - start-rails-server.sh
+    - web サーバを起動する
+      - bundle check
+      - pid ファイルの削除
+      - rails s
+
+```zsh
+# init_proj/*.sh と .env を配置後
+% ./init_proj/setup.sh
+
+# 途中で入力する
+Password: **********
+```
+
+- 構築後の確認
+  - コンテナ
+    - rrp-web-cont
+    - rrp-db-cont
+  - ブラウザから以下のアドレスにアクセスする
+    - [http://example.com:3000](*)
+    - [http://rrp.example.com:3000](*)
+
+```zsh
+# web サーバを起動する
+% docker-compose up -d web
+```
