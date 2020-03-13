@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  db:
+    container_name: rrp-db-cont
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    image: postgres:12.2-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rrp-web-cont
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - DB_HOST
+      - DB_PORT
+      - DB_DEV_NAME
+      - DB_TEST_NAME
+      - DB_PROD_NAME
+      - CUSTOMER_HOST_NAME
+      - STAFF_HOST_NAME
+      - RAILS_SERVE_STATIC_FILES
+      - RUBYOPT
+      - TZ
+    image: rrp-web-img
+    volumes:
+      - .:/proj-cont
+      - ./vendor/bundle:/usr/local/bundle
+      - ./node_modules:/proj-cont/node_modules
+    ports:
+      - 3000:3000 # Rails
+      - 3001:3001 # webpack-dev-server
+    tty: true
+
