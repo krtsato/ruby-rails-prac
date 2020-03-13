@@ -1,16 +1,18 @@
 # ruby-rails-prac
 
-※現在開発途中のため書きかけです．
+※現在開発途中のため書きかけです．  
 
-Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
+Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．  
 成果物から得られること
 
 - チュートリアル以上の実践的な Rails の使い方
 - RSpec, Capybara を用いたテストコードの書き方
 - ワンコマンドで環境構築を完了させるスクリプト群
-- 随時追加
+- 詳細は *** を参照 / 随時追加予定
 
 <br>
+
+リポジトリ概要
 
 - [機能](#機能)
 - [環境](#環境)
@@ -38,7 +40,8 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - jQuery
 - ERB
 
-フロントエンドは今回の学習範囲に含めないため jQuery のコピペで済ませる．なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
+フロントエンドは今回の学習範囲に含めないため jQuery のコピペで済ませる．  
+なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
 
 <br>
 
@@ -66,7 +69,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
       - Gemfile
       - Rakefile
       - .gitignore
-  - create-rc-files
+  - create-rc-files.sh
     - コンテナのホームディレクトリに rc ファイルを生成する
       - .gemrc
       - .psqlrc
@@ -99,8 +102,8 @@ Password: **********
     - rrp-web-cont
     - rrp-db-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://example.com:3000](*)
-    - [http://rrp.example.com:3000](*)
+    - [http&#58;//example.com:3000](*)
+    - [http&#58;//rrp.example.com:3000](*)
 
 ```zsh
 # web サーバを起動する
