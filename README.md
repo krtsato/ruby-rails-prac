@@ -8,7 +8,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - チュートリアル以上の実践的な Rails の使い方
 - RSpec, Capybara を用いたテストコードの書き方
 - ワンコマンドで環境構築を完了させるスクリプト群
-- 詳細は *** を参照 / 随時追加予定
+- 詳細は [references/ruby-rails/rails-arch.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-arch.md) を参照 / 随時編集予定
 
 <br>
 
