@@ -26,7 +26,6 @@ yarn-debug.log*
 /public/packs
 /public/packs-test
 /node_modules
+/.markdownlint.yml
 .yarn-integrity
-.markdownlint.yml
-
 
