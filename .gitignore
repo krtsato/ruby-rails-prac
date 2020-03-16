@@ -28,4 +28,3 @@ yarn-debug.log*
 /node_modules
 /.markdownlint.yml
 .yarn-integrity
-
