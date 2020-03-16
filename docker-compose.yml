@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   db:
-    container_name: rrp-db-cont
+    container_name: rrrp-db-cont
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: rrp-web-cont
+    container_name: rrrp-web-cont
     depends_on:
       - db
     environment:
@@ -31,7 +31,7 @@ services:
       - RAILS_SERVE_STATIC_FILES
       - RUBYOPT
       - TZ
-    image: rrp-web-img
+    image: rrrp-web-img
     volumes:
       - .:/proj-cont
       - ./vendor/bundle:/usr/local/bundle
