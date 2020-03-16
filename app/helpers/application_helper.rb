@@ -3,9 +3,9 @@
 module ApplicationHelper
   def document_title
     if @title.present?
-      "#{@title} - rrp"
+      "#{@title} | Ruby-Rails-RSpec-Prac"
     else
-      "rrp"
+      "Ruby-Rails-RSpec-Prac"
     end
   end
 end

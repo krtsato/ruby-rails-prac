@@ -1,4 +1,4 @@
-# ruby-rails-prac
+# ruby-rails-rspec-prac
 
 ※現在開発途中のため書きかけです．  
 
@@ -6,9 +6,10 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 成果物から得られること
 
 - チュートリアル以上の実践的な Rails の使い方
+  - 詳細は [references/ruby-rails/rails-arch.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-arch.md) を参照
 - RSpec, Capybara を用いたテストコードの書き方
+  - 詳細は [references/ruby-rails/rspec-syntax.md](https://github.com/krtsato/references/blob/master/ruby-rails/rspec-syntax.md) を参照
 - ワンコマンドで環境構築を完了させるスクリプト群
-- 詳細は [references/ruby-rails/rails-arch.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-arch.md) を参照 / 随時編集予定
 
 <br>
 
@@ -23,7 +24,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 ## 機能
 
 - 随時追加
-- タスク は [Issue](https://github.com/krtsato/ruby-rails-prac/issues) で管理する
+- タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
 
 <br>
 
@@ -99,11 +100,11 @@ Password: **********
 
 - 構築後の確認
   - コンテナ
-    - rrp-web-cont
-    - rrp-db-cont
+    - rrrp-web-cont
+    - rrrp-db-cont
   - ブラウザから以下のアドレスにアクセスする
     - [http://example.com:3000](http://example.com:3000)
-    - [http://rrp.example.com:3000](http://rrp.example.com:3000)
+    - [http://rrrp.example.com:3000](http://rrrp.example.com:3000)
 
 ```zsh
 # web サーバを起動する
