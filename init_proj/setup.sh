@@ -3,7 +3,7 @@
 set -ex
 
 # Create setup files
-chmod +x init_proj/create*.sh
+chmod +x init_proj/create*.sh init_proj/start*.sh
 source init_proj/create-setup-files.sh
 create_docker_compose
 create_dockerfile
