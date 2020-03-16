@@ -7,7 +7,7 @@ create_docker_compose() {
 version: '3.7'
 services:
   db:
-    container_name: rrp-db-cont
+    container_name: rrrp-db-cont
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: rrp-web-cont
+    container_name: rrrp-web-cont
     depends_on:
       - db
     environment:
@@ -37,7 +37,7 @@ services:
       - RAILS_SERVE_STATIC_FILES
       - RUBYOPT
       - TZ
-    image: rrp-web-img
+    image: rrrp-web-img
     volumes:
       - .:/proj-cont
       - ./vendor/bundle:/usr/local/bundle
@@ -312,8 +312,8 @@ EOF
 
 append_etc_host() {
   sudo zsh -c "cat >> /etc/hosts" <<EOF
-# Added by ruby-rails-prac
-127.0.0.1 example.com rrp.example.com
+# Added by ruby-rails-rspec-prac
+127.0.0.1 example.com rrrp.example.com
 # End of section
 
 EOF
