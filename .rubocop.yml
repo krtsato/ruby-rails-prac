@@ -60,7 +60,3 @@ Style/HashTransformValues:
 
 Style/RedundantSelf:
   Enabled: false
-
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
