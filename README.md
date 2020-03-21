@@ -35,7 +35,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - Rails
 - PostgreSQL
 - RSpec
-- Cappybara
+- Capybara
 - RuboCop
 - Webpacker
 - jQuery
