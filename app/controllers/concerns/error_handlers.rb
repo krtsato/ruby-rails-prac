@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ErrorHandlers
   extend ActiveSupport::Concern
 
@@ -11,20 +13,20 @@ module ErrorHandlers
 
   private
 
-  def rescue400(e)
+  def rescue400
     render 'errors/bad_request', status: 400
   end
 
-  def rescue403(e)
-    @exception = e
+  def rescue403(exception)
+    @exception = exception
     render 'errors/forbidden', status: 403
   end
 
-  def rescue404(e)
+  def rescue404
     render 'errors/not_found', status: 404
   end
 
-  def rescue500(e)
+  def rescue500
     render 'errors/internal_server_error', status: 500
   end
 end

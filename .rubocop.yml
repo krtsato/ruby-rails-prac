@@ -26,7 +26,7 @@ AllCops:
     - Rakefile
 
 Layout/LineLength:
-  Max: 135
+  Max: 120
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
@@ -58,9 +58,8 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
-Style/RedundantSelf:
+Style/IfUnlessModifier:
   Enabled: false
 
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
+Style/RedundantSelf:
+  Enabled: false
