@@ -308,6 +308,22 @@ Rails.application.load_tasks
 EOF
 }
 
+#################### config/environments/development.rb ####################
+
+append_spec_rails_helper() {
+  touch spec/factories/.keep
+  local readonly SPEC_RAILS_HELPER_DIR=spec/rails_helper.rb
+  sed -i "" -e '$d' $SPEC_RAILS_HELPER_DIR # Delete the last line
+  cat <<EOF >> $SPEC_RAILS_HELPER_DIR
+
+  # enable to use methods which is defined in FactoryBot::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
+end
+
+EOF
+}
+
+
 #################### /etc/hosts in the host machine ####################
 
 append_etc_host() {

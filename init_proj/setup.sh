@@ -9,7 +9,7 @@ create_docker_compose
 create_dockerfile
 create_dockerignore
 create_gemfile
-mkdir -p config/environments config/initializers
+mkdir -p config/environments config/initializers spec/factories
 create_config_application
 create_config_database
 create_config_init_blocked_hosts
@@ -28,6 +28,7 @@ docker-compose run --rm web bash -c \
 
 # Setup additional files after rails new
 append_config_env_dev
+append_spec_rails_helper
 append_etc_host
 create_gitignore
 

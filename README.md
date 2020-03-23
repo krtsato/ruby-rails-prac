@@ -35,7 +35,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - Rails
 - PostgreSQL
 - RSpec
-- Cappybara
+- Capybara
 - RuboCop
 - Webpacker
 - jQuery
@@ -82,7 +82,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
       - yarn check
       - rails db:create
       - rails g rspec:install
-      - rubocop --auto
+      - rubocop --auto-gen-config
       - 最終的に start-rails-server.sh を呼び出す
   - start-rails-server.sh
     - web サーバを起動する
