@@ -36,4 +36,7 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+
+  # enable to use methods which is defined in FactoryBot::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end
