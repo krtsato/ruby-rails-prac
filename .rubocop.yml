@@ -33,6 +33,7 @@ Layout/SpaceInLambdaLiteral:
 
 Layout/SpaceInsideBlockBraces:
   EnforcedStyle: no_space
+  SpaceBeforeBlockParameters: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space

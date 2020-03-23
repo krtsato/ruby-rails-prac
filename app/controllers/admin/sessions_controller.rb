@@ -13,15 +13,13 @@ module Admin
 
     def create
       @form = LoginForm.new(params[:admin_login_form])
-      if @form.email.present?
-        administrator = Administrator.find_by("LOWER(email) = ?", @form.email.downcase)
-      end
+      if @form.email.present? then administrator = Administrator.find_by('LOWER(email) = ?', @form.email.downcase) end
 
       if Authenticator.new(administrator).authenticate(@form.password)
         if administrator.suspended?
           flash.now.alert = 'アカウントが停止されています'
           render action: 'new'
-        else 
+        else
           session[:administrator_id] = administrator.id
           flash.notice = 'ログインしました'
           redirect_to :admin_root
