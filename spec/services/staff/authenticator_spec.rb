@@ -19,9 +19,9 @@ describe Staff::Authenticator do
       expect(described_class.new(m).authenticate(nil)).to be_falsey
     end
 
-    example '停止フラグが立っていれば false を返す' do
+    example '停止フラグが立っていても true を返す' do
       m = build(:staff_member, suspended: true)
-      expect(described_class.new(m).authenticate('pw')).to be_falsey
+      expect(described_class.new(m).authenticate('pw')).to be_truthy
     end
 
     example '開始前ならば false を返す' do
