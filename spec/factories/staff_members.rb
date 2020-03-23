@@ -8,7 +8,7 @@ FactoryBot.define do
     family_name_kana {'ヤマダ'}
     given_name_kana {'タロウ'}
     password {'pw'}
-    start_date {Date.yesterday}
+    start_date {Time.zone.yesterday}
     end_date {nil}
     suspended {false}
   end

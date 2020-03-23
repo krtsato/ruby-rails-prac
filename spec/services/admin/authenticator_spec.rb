@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Admin::Authenticator do
+RSpec.describe Admin::Authenticator do
   describe '#authenticate' do
     example '正しいパスワードならば true を返す' do
       a = build(:administrator)
