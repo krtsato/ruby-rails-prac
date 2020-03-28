@@ -6,7 +6,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 成果物から得られること
 
 - チュートリアル以上の実践的な Rails の使い方
-  - 詳細は [references/ruby-rails/rails-arch.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-arch.md) を参照
+  - 詳細は [references/ruby-rails/rails-proc.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-proc.md) を参照
 - RSpec, Capybara を用いたテストコードの書き方
   - 詳細は [references/ruby-rails/rspec-syntax.md](https://github.com/krtsato/references/blob/master/ruby-rails/rspec-syntax.md) を参照
 - ワンコマンドで環境構築を完了させるスクリプト群
