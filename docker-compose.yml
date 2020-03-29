@@ -40,4 +40,3 @@ services:
       - 3000:3000 # Rails
       - 3001:3001 # webpack-dev-server
     tty: true
-
