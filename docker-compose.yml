@@ -26,8 +26,8 @@ services:
       - DB_DEV_NAME
       - DB_TEST_NAME
       - DB_PROD_NAME
+      - ADMIN_STAFF_HOST_NAME
       - CUSTOMER_HOST_NAME
-      - STAFF_HOST_NAME
       - RAILS_SERVE_STATIC_FILES
       - RUBYOPT
       - TZ

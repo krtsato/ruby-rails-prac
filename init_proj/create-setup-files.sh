@@ -32,8 +32,8 @@ services:
       - DB_DEV_NAME
       - DB_TEST_NAME
       - DB_PROD_NAME
+      - ADMIN_STAFF_HOST_NAME
       - CUSTOMER_HOST_NAME
-      - STAFF_HOST_NAME
       - RAILS_SERVE_STATIC_FILES
       - RUBYOPT
       - TZ
@@ -149,24 +149,24 @@ create_config_database() {
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV["DB_HOST"] %> 
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['DB_HOST'] %> 
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
   timeout: 5000
-  username: <%= ENV["POSTGRES_USER"] %>
+  username: <%= ENV['POSTGRES_USER'] %>
 
 development:
   <<: *default
-  database: <%= ENV["DB_DEV_NAME"] %> 
-  port: <%= ENV["DB_PORT"] %>
+  database: <%= ENV['DB_DEV_NAME'] %> 
+  port: <%= ENV['DB_PORT'] %>
 
 test:
   <<: *default
-  database: <%= ENV["DB_TEST_NAME"] %>
+  database: <%= ENV['DB_TEST_NAME'] %>
 
 production:
   <<: *default
-  database: <%= ENV["DB_PROD_NAME"] %>
+  database: <%= ENV['DB_PROD_NAME'] %>
 
 EOF
 }
