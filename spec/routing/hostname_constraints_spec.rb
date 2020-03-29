@@ -2,9 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Routing, type: :routing do
+RSpec.describe 'ルーティング', type: :routing do
+  config = Rails.application.config.rrrp
+
   example '職員トップページ' do
-    config = Rails.application.config.rrrp
     url = "http://#{config[:staff][:host]}/#{config[:staff][:path]}"
     expect(get: url).to route_to(
       host: config[:staff][:host],
@@ -14,7 +15,6 @@ RSpec.describe Routing, type: :routing do
   end
 
   example '管理者ログインフォーム' do
-    config = Rails.application.config.rrrp
     url = "http://#{config[:admin][:host]}/#{config[:admin][:path]}/login"
     expect(get: url).to route_to(
       host: config[:admin][:host],
@@ -23,22 +23,11 @@ RSpec.describe Routing, type: :routing do
     )
   end
 
-  example '顧客トップページ' do
-    config = Rails.application.config.rrrp
-    url = "http://#{config[:customer][:host]}/#{config[:customer][:path]}"
-    expect(get: url).to route_to(
-      host: config[:customer][:host],
-      controller: 'customer/top',
-      action: 'index'
-    )
+  example 'ホスト名が対象外ならば routable でない' do
+    expect(get: 'http://xyz.example.com').not_to be_routable
   end
 
-  example 'ホスト名が対象外ならroutableではない' do
-    expect(get: 'http://foo.example.com').not_to be_routable
-  end
-
-  example '存在しないパスならroutableではない' do
-    config = Rails.application.config.rrrp
+  example '存在しないパスならば routable でない' do
     expect(get: "http://#{config[:staff][:host]}/xyz").not_to be_routable
   end
 end

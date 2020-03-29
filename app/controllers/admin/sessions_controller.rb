@@ -17,16 +17,14 @@ module Admin
 
       if Authenticator.new(administrator).authenticate(@form.password)
         if administrator.suspended?
-          flash.now.alert = 'アカウントが停止されています'
-          render action: 'new'
+          back_to_login_form('アカウントが停止されています')
         else
           session[:administrator_id] = administrator.id
           flash.notice = 'ログインしました'
           redirect_to :admin_root
         end
       else
-        flash.now.alert = 'メールアドレスまたはパスワードが正しくありません'
-        render action: 'new'
+        back_to_login_form('メールアドレスまたはパスワードが正しくありません')
       end
     end
 
@@ -34,6 +32,13 @@ module Admin
       session.delete(:administrator_id)
       flash.notice = 'ログアウトしました'
       redirect_to :admin_root
+    end
+
+    private
+
+    def back_to_login_form(alert_text)
+      flash.now.alert = alert_text
+      render action: 'new'
     end
   end
 end

@@ -378,6 +378,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
+RSpec/ExampleLength:
+  Max: 10
+
 Style/AsciiComments:
   Enabled: true
 

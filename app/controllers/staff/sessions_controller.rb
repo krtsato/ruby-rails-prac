@@ -17,16 +17,14 @@ module Staff
 
       if Authenticator.new(staff_member).authenticate(@form.password)
         if staff_member.suspended?
-          flash.now.alert = 'アカウントが停止されています'
-          render action: 'new'
+          back_to_login_form('アカウントが停止されています')
         else
           session[:staff_member_id] = staff_member.id
           flash.notice = 'ログインしました'
           redirect_to :staff_root
         end
       else
-        flash.now.alert = 'メールアドレスまたはパスワードが正しくありません'
-        render action: 'new'
+        back_to_login_form('メールアドレスまたはパスワードが正しくありません')
       end
     end
 
@@ -34,6 +32,13 @@ module Staff
       session.delete(:staff_member_id)
       flash.notice = 'ログアウトしました'
       redirect_to :staff_root
+    end
+
+    private
+
+    def back_to_login_form(alert_text)
+      flash.now.alert = alert_text
+      render action: 'new'
     end
   end
 end
