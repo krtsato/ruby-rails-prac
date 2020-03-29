@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
   namespace :admin do
     root 'top#index'
-    get 'login' => 'session#new', as: :login
+    get 'login' => 'sessions#new', as: :login
     resource :session, only: [:create, :destroy]
+    resources :staff_members
   end
   
-  namespace :staff do
+  namespace :staff, path: '' do
     root 'top#index'
     get 'login' => 'sessions#new', as: :login
     resource :session, only: [:create, :destroy]
+    resource :account, except: [:new, :create, :destroy]
   end 
   
   namespace :customer do
