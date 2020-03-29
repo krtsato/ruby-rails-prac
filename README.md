@@ -25,6 +25,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 
 - 随時追加
 - タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
+- Issue 毎にブランチを切って実装完了後にプルリク・マージ
 
 <br>
 
