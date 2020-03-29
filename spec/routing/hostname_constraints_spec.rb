@@ -23,6 +23,15 @@ RSpec.describe 'ルーティング', type: :routing do
     )
   end
 
+  example "顧客トップページ" do
+    url = "http://#{config[:customer][:host]}/#{config[:customer][:path]}"
+    expect(get: url).to route_to(
+      host: config[:customer][:host],
+      controller: "customer/top",
+      action: "index"
+    )
+  end
+
   example 'ホスト名が対象外ならば routable でない' do
     expect(get: 'http://xyz.example.com').not_to be_routable
   end
