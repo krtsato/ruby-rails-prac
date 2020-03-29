@@ -32,8 +32,8 @@ services:
       - DB_DEV_NAME
       - DB_TEST_NAME
       - DB_PROD_NAME
+      - ADMIN_STAFF_HOST_NAME
       - CUSTOMER_HOST_NAME
-      - STAFF_HOST_NAME
       - RAILS_SERVE_STATIC_FILES
       - RUBYOPT
       - TZ
@@ -46,7 +46,6 @@ services:
       - 3000:3000 # Rails
       - 3001:3001 # webpack-dev-server
     tty: true
-
 EOF
 }
 
@@ -72,7 +71,6 @@ RUN set -ox pipefail \
 COPY . .
 
 CMD ["init_proj/start-rails-server.sh"]
-
 EOF
 }
 
@@ -89,7 +87,6 @@ create_dockerignore() {
 **/npm-debug.log
 README.md
 yarn-error.log
-
 EOF
 }
 
@@ -138,7 +135,6 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
 end
-
 EOF
 }
 
@@ -149,25 +145,24 @@ create_config_database() {
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV["DB_HOST"] %> 
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['DB_HOST'] %> 
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
   timeout: 5000
-  username: <%= ENV["POSTGRES_USER"] %>
+  username: <%= ENV['POSTGRES_USER'] %>
 
 development:
   <<: *default
-  database: <%= ENV["DB_DEV_NAME"] %> 
-  port: <%= ENV["DB_PORT"] %>
+  database: <%= ENV['DB_DEV_NAME'] %> 
+  port: <%= ENV['DB_PORT'] %>
 
 test:
   <<: *default
-  database: <%= ENV["DB_TEST_NAME"] %>
+  database: <%= ENV['DB_TEST_NAME'] %>
 
 production:
   <<: *default
-  database: <%= ENV["DB_PROD_NAME"] %>
-
+  database: <%= ENV['DB_PROD_NAME'] %>
 EOF
 }
 
@@ -203,9 +198,8 @@ yarn-debug.log*
 /public/packs
 /public/packs-test
 /node_modules
+/.markdownlint.yml
 .yarn-integrity
-.markdown.yml
-
 EOF
 }
 
@@ -230,7 +224,7 @@ require "action_view/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module RubyRailsPrac
+module RubyRailsRSepcPrac
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -256,7 +250,6 @@ module RubyRailsPrac
     config.generators.system_tests = nil
   end
 end
-
 EOF
 }
 
@@ -270,7 +263,6 @@ append_config_env_dev() {
   # For web-console running on the docker network
   config.web_console.whitelisted_ips = [ "172.16.0.0/12" ]
 end
-
 EOF
 }
 
@@ -283,7 +275,6 @@ Rails.application.configure do
   config.hosts << ENV["CUSTOMER_HOST_NAME"]
   config.hosts << ENV["STAFF_HOST_NAME"]
 end
-
 EOF
 }
 
@@ -304,7 +295,6 @@ RuboCop::RakeTask.new do |task|
 end
 
 Rails.application.load_tasks
-
 EOF
 }
 
@@ -319,7 +309,6 @@ append_spec_rails_helper() {
   # enable to use methods which is defined in FactoryBot::Syntax::Methods
   config.include FactoryBot::Syntax::Methods
 end
-
 EOF
 }
 
@@ -331,7 +320,6 @@ append_etc_host() {
 # Added by ruby-rails-rspec-prac
 127.0.0.1 example.com rrrp.example.com
 # End of section
-
 EOF
 }
 
@@ -368,13 +356,14 @@ AllCops:
     - Rakefile
 
 Layout/LineLength:
-  Max: 135
+  Max: 120
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
 Layout/SpaceInsideBlockBraces:
   EnforcedStyle: no_space
+  SpaceBeforeBlockParameters: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
@@ -382,8 +371,15 @@ Layout/SpaceInsideHashLiteralBraces:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 Metrics/MethodLength:
   Max: 15
+
+RSpec/ExampleLength:
+  Max: 10
 
 Style/AsciiComments:
   Enabled: true
@@ -400,11 +396,10 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
-Style/RedundantSelf:
+Style/IfUnlessModifier:
   Enabled: false
 
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
+Style/RedundantSelf:
+  Enabled: false
 EOF
 }

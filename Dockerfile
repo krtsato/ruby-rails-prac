@@ -16,4 +16,3 @@ RUN set -ox pipefail \
 COPY . .
 
 CMD ["init_proj/start-rails-server.sh"]
-

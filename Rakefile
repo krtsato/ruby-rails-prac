@@ -11,4 +11,3 @@ RuboCop::RakeTask.new do |task|
 end
 
 Rails.application.load_tasks
-

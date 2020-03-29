@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Staff::Authenticator do
+RSpec.describe Staff::Authenticator do
   describe '#authenticate' do
     example '正しいパスワードならば true を返す' do
       m = build(:staff_member)

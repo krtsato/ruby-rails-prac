@@ -41,4 +41,3 @@ module RubyRailsRSpecPrac
     config.generators.system_tests = nil
   end
 end
-

@@ -33,6 +33,7 @@ Layout/SpaceInLambdaLiteral:
 
 Layout/SpaceInsideBlockBraces:
   EnforcedStyle: no_space
+  SpaceBeforeBlockParameters: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
@@ -46,6 +47,9 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Max: 15
+
+RSpec/ExampleLength:
+  Max: 10
 
 Style/AsciiComments:
   Enabled: true
