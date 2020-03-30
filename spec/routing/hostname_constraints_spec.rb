@@ -23,12 +23,12 @@ RSpec.describe 'ルーティング', type: :routing do
     )
   end
 
-  example "顧客トップページ" do
+  example '顧客トップページ' do
     url = "http://#{config[:customer][:host]}/#{config[:customer][:path]}"
     expect(get: url).to route_to(
       host: config[:customer][:host],
-      controller: "customer/top",
-      action: "index"
+      controller: 'customer/top',
+      action: 'index'
     )
   end
 
