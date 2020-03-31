@@ -39,7 +39,7 @@ module Admin
     def login_form_params
       params.require(:admin_login_form).permit(:email, :password)
     end
-    
+
     def back_to_login_form(alert_text)
       flash.now.alert = alert_text
       render action: 'new'

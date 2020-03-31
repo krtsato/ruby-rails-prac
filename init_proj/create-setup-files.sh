@@ -382,7 +382,7 @@ RSpec/ExampleLength:
   Max: 10
 
 Style/AsciiComments:
-  Enabled: true
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
