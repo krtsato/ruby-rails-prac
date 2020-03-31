@@ -10,5 +10,9 @@ module Admin
       staff_member = StaffMember.find(params[:id])
       redirect_to[:edit, :admin, staff_member]
     end
+
+    def new
+      @staff_member = StaffMember.new
+    end
   end
 end
