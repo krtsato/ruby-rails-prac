@@ -12,7 +12,7 @@ module Staff
     end
 
     def create
-      @form = LoginForm.new(params[:staff_login_form])
+      @form = LoginForm.new(login_form_params)
       if @form.email.present? then staff_member = StaffMember.find_by('LOWER(email) = ?', @form.email.downcase) end
 
       if Authenticator.new(staff_member).authenticate(@form.password)
@@ -35,6 +35,10 @@ module Staff
     end
 
     private
+
+    def login_form_params
+      params.require(:staff_login_form).permit(:email, :password)
+    end
 
     def back_to_login_form(alert_text)
       flash.now.alert = alert_text
