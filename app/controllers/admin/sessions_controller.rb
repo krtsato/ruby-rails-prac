@@ -12,7 +12,7 @@ module Admin
     end
 
     def create
-      @form = LoginForm.new(params[:admin_login_form])
+      @form = LoginForm.new(login_form_params)
       if @form.email.present? then administrator = Administrator.find_by('LOWER(email) = ?', @form.email.downcase) end
 
       if Authenticator.new(administrator).authenticate(@form.password)
@@ -35,6 +35,10 @@ module Admin
     end
 
     private
+
+    def login_form_params
+      params.require(:admin_login_form).permit(:email, :password)
+    end
 
     def back_to_login_form(alert_text)
       flash.now.alert = alert_text
