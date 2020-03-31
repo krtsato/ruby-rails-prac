@@ -28,5 +28,16 @@ module Admin
         render action: 'new'
       end
     end
+
+    def update
+      @staff_member = StaffMember.find(params[:id])
+      @staff_member.assgin_attributes(params[:staff_member])
+      if @staff_member.save
+        flash.notice = '職員アカウントを更新しました'
+        redirect_to :admin_staff_members
+      else
+        render action: 'edit'
+      end
+    end
   end
 end
