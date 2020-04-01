@@ -28,8 +28,8 @@ gn_size = given_names.size
 all_combinations = fn_size * gn_size 
 
 all_combinations.times do |n|
-  fn = family_names[n % fn_size].split(":")
-  gn = given_names[n % gn_size].split(":")
+  fn = family_names[n % fn_size].split(':')
+  gn = given_names[n % gn_size].split(':')
 
   StaffMember.create!(
     email: "#{fn[2]}.#{gn[2]}@example.com",
@@ -37,7 +37,7 @@ all_combinations.times do |n|
     given_name: gn[0],
     family_name_kana: fn[1],
     given_name_kana: gn[1],
-    password: "password",
+    password: 'password',
     start_date: (100 - n).days.ago.to_date,
     end_date: n == 0 ? Time.zone.today : nil,
     suspended: n == 1

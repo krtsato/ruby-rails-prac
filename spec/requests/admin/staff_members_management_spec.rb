@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe '管理者による職員管理', type: :request do
+RSpec.describe Admin::StaffMembers, type: :request do
   let(:administrator) {create(:administrator)}
 
   describe '一覧' do
@@ -40,7 +40,7 @@ RSpec.describe '管理者による職員管理', type: :request do
       params_hash.delete(:password)
       params_hash[:hashed_password] = 'x'
       expect {patch admin_staff_member_url(staff_member), params: {staff_member: params_hash}}.not_to \
-      change {staff_member.hashed_password.to_s}
+        change {staff_member.hashed_password.to_s}.to('x')
     end
   end
 end
