@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Staff::Account', type: :request do
@@ -21,7 +23,7 @@ RSpec.describe 'Staff::Account', type: :request do
     let(:staff_member) {create(:staff_member)}
 
     example 'email 属性を変更する' do
-      params_hash.merge!(email: 'test@example.com')
+      params_hash[:email] = 'test@example.com'
       patch staff_account_url, params: {id: staff_member.id, staff_member: params_hash}
       staff_member.reload # オブジェクトの各属性値を DB から再取得する
       expect(staff_member.email).to eq('test@example.com')
@@ -33,9 +35,9 @@ RSpec.describe 'Staff::Account', type: :request do
     end
 
     example 'end_date の値は書き換え不可' do
-      params_hash.merge!(end_date: Time.zone.tomorrow)
+      params_hash[:end_date] = Time.zone.tomorrow
       expect {patch staff_account_url, params: {id: staff_member.id, staff_member: params_hash}}.not_to \
-        change {staff_member.end_date}
+        change(staff_member, :end_date)
     end
   end
 end
