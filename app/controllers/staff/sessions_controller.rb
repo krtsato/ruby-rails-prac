@@ -22,6 +22,7 @@ module Staff
           back_to_login_form('アカウントが停止されています')
         else
           session[:staff_member_id] = staff_member.id
+          session[:last_access_time] = Time.current
           flash.notice = 'ログインしました'
           redirect_to :staff_root
         end
