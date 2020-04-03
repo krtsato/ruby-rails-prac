@@ -2,6 +2,8 @@
 
 module Staff
   class Base < ApplicationController
+    before_action :authorize
+    
     private
 
     def current_staff_member
@@ -11,5 +13,11 @@ module Staff
     end
 
     helper_method :current_staff_member
+
+    def authorize
+      return if current_staff_member.present?
+      
+      flash.alert = '職員としてログインして下さい'
+      redirect_to :staff_login
   end
 end
