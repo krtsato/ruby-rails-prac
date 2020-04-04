@@ -16,7 +16,7 @@ module Admin
 
     def authorize
       return if current_administrator.present?
-      
+
       flash.alert = '管理者としてログインして下さい'
       redirect_to :admin_login
     end

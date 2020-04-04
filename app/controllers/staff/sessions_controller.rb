@@ -23,8 +23,7 @@ module Staff
         else
           session[:staff_member_id] = staff_member.id
           session[:last_access_time] = Time.current
-          flash.notice = 'ログインしました'
-          redirect_to :staff_root
+          go_to_staff_root('ログインしました')
         end
       else
         back_to_login_form('メールアドレスまたはパスワードが正しくありません')
@@ -33,14 +32,18 @@ module Staff
 
     def destroy
       session.delete(:staff_member_id)
-      flash.notice = 'ログアウトしました'
-      redirect_to :staff_root
+      go_to_staff_root('ログアウトしました')
     end
 
     private
 
     def login_form_params
       params.require(:staff_login_form).permit(:email, :password)
+    end
+
+    def go_to_staff_root(notice_text)
+      flash.notice = notice_text
+      redirect_to :staff_root
     end
 
     def back_to_login_form(alert_text)
