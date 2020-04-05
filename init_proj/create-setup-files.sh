@@ -256,7 +256,7 @@ EOF
 #################### config/environments/development.rb ####################
 
 append_config_env_dev() {
-  local readonly CONFIG_ENV_DEV_DIR=config/environments/development.rb
+  readonly local CONFIG_ENV_DEV_DIR=config/environments/development.rb
   sed -i "" -e '$d' $CONFIG_ENV_DEV_DIR # Delete the last line
   cat <<EOF >> $CONFIG_ENV_DEV_DIR
 
@@ -298,11 +298,25 @@ Rails.application.load_tasks
 EOF
 }
 
-#################### config/environments/development.rb ####################
+#################### spec/rails_helper.rb ####################
 
 append_spec_rails_helper() {
   touch spec/factories/.keep
-  local readonly SPEC_RAILS_HELPER_DIR=spec/rails_helper.rb
+  readonly local SPEC_RAILS_HELPER_DIR=spec/rails_helper.rb
+  readonly local ORIGINAL_TEXT="^require 'rspec\/rails'$"
+  readonly local ORIGINAL_LINE_NUM=$(grep -n $ORIGINAL_TEXT $SPEC_RAILS_HELPER_DIR | cut -c 1)
+  readonly local TARGET_LINE_NUM=$(($ORIGINAL_LINE_NUM + 1))
+  readonly local INSERTED_TEXT="Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each {|f| require f}"
+
+  # spec/support に shared_example・shared_context を配置する
+  # BSD sed の行番号指定による挿入
+  # ダブルクォートで囲む場合は \ でエスケープ
+  # sed '<行番号>i\
+  #   <挿入文字列>' <ファイルパス>
+  sed -i '' -e "${TARGET_LINE_NUM}i\\
+    $INSERTED_TEXT" $SPEC_RAILS_HELPER_DIR
+
+  # Factory Bot のメソッドを spec ファイルで使用する
   sed -i "" -e '$d' $SPEC_RAILS_HELPER_DIR # Delete the last line
   cat <<EOF >> $SPEC_RAILS_HELPER_DIR
 

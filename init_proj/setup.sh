@@ -9,7 +9,7 @@ create_docker_compose
 create_dockerfile
 create_dockerignore
 create_gemfile
-mkdir -p config/environments config/initializers spec/factories
+mkdir -p config/environments config/initializers spec/factories spec/support
 create_config_application
 create_config_database
 create_config_init_blocked_hosts

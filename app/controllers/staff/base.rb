@@ -27,7 +27,7 @@ module Staff
       return if current_staff_member.blank? || current_staff_member.active?
 
       session.delete(:staff_member_id)
-      flash.aler = 'アカウントが無効になりました'
+      flash.alert = 'アカウントが無効になりました'
       redirect_to :staff_root
     end
 
@@ -37,7 +37,7 @@ module Staff
       return if current_staff_member.blank?
 
       if session[:last_access_time] >= TIMEOUT.ago
-        session[:last_access_time] = TIMEOUT.current
+        session[:last_access_time] = Time.current
       else
         session.delete(:staff_member_id)
         flash.alert = 'セッションがタイムアウトしました'

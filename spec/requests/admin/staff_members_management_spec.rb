@@ -2,8 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Admin::StaffMembers, type: :request do
+RSpec.describe 'Admin::StaffMembers', type: :request do
   let(:administrator) {create(:administrator)}
+
+  before do
+    post admin_session_url, params: {
+      admin_login_form: {email: administrator.email, password: 'password'}
+    }
+  end
 
   describe '一覧' do
     example '成功' do
@@ -40,7 +46,7 @@ RSpec.describe Admin::StaffMembers, type: :request do
       params_hash.delete(:password)
       params_hash[:hashed_password] = 'x'
       expect {patch admin_staff_member_url(staff_member), params: {staff_member: params_hash}}.not_to \
-        change {staff_member.hashed_password.to_s}.to('x')
+        change(staff_member, :hashed_password.to_s)
     end
   end
 end
