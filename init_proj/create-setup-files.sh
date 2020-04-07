@@ -316,12 +316,15 @@ append_spec_rails_helper() {
   sed -i '' -e "${TARGET_LINE_NUM}i\\
     $INSERTED_TEXT" $SPEC_RAILS_HELPER_DIR
 
-  # Factory Bot のメソッドを spec ファイルで使用する
+  # テスト用のメソッドを spec ファイルで使用する
   sed -i "" -e '$d' $SPEC_RAILS_HELPER_DIR # Delete the last line
   cat <<EOF >> $SPEC_RAILS_HELPER_DIR
 
-  # enable to use methods which is defined in FactoryBot::Syntax::Methods
+  # enable to use factory building methods in spec tests
   config.include FactoryBot::Syntax::Methods
+
+  # enable to use time traveling methods in spec tests
+  config.include ActiveSupport::Testing::TimeHelpers
 end
 EOF
 }

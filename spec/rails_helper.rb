@@ -39,6 +39,9 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 
-  # enable to use methods which is defined in FactoryBot::Syntax::Methods
+  # enable to use factory building methods in spec tests
   config.include FactoryBot::Syntax::Methods
+
+  # enable to use time traveling methods in spec tests
+  config.include ActiveSupport::Testing::TimeHelpers
 end
