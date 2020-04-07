@@ -22,8 +22,8 @@ module Admin
           back_to_login_form('アカウントが停止されています')
         else
           session[:administrator_id] = administrator.id
-          flash.notice = 'ログインしました'
-          redirect_to :admin_root
+          session[:admin_last_access_time] = Time.current
+          go_to_admin_root('ログインしました')
         end
       else
         back_to_login_form('メールアドレスまたはパスワードが正しくありません')
@@ -32,14 +32,18 @@ module Admin
 
     def destroy
       session.delete(:administrator_id)
-      flash.notice = 'ログアウトしました'
-      redirect_to :admin_root
+      go_to_admin_root('ログアウトしました')
     end
 
     private
 
     def login_form_params
       params.require(:admin_login_form).permit(:email, :password)
+    end
+
+    def go_to_admin_root(notice_text)
+      flash.notice = notice_text
+      redirect_to :admin_root
     end
 
     def back_to_login_form(alert_text)

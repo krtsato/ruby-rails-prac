@@ -22,7 +22,7 @@ module Staff
           back_to_login_form('アカウントが停止されています')
         else
           session[:staff_member_id] = staff_member.id
-          session[:last_access_time] = Time.current
+          session[:staff_last_access_time] = Time.current
           go_to_staff_root('ログインしました')
         end
       else

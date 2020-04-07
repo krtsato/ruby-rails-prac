@@ -22,6 +22,12 @@ RSpec.describe 'Admin::StaffMembers', type: :request do
       get admin_staff_members_url
       expect(response.status).to eq(200)
     end
+
+    example '停止フラグがセットされたら強制的にログアウト' do
+      administrator.update!(suspended: true)
+      get admin_staff_members_url
+      expect(response).to redirect_to(admin_root_url)
+    end
   end
 
   describe '新規登録' do
@@ -34,6 +40,12 @@ RSpec.describe 'Admin::StaffMembers', type: :request do
 
     example '例外 ActionController::ParameterMissing が発生' do
       expect {post admin_staff_members_url}.to raise_error(ActionController::ParameterMissing)
+    end
+
+    example 'セッションタイムアウト' do
+      travel_to Admin::Base::TIMEOUT.from_now.advance(seconds: 1)
+      get admin_staff_members_url
+      expect(response).to redirect_to(admin_login_url)
     end
   end
 

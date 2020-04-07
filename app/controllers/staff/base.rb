@@ -36,8 +36,8 @@ module Staff
     def check_timeout
       return if current_staff_member.blank?
 
-      if session[:last_access_time] >= TIMEOUT.ago
-        session[:last_access_time] = Time.current
+      if session[:staff_last_access_time] >= TIMEOUT.ago
+        session[:staff_last_access_time] = Time.current
       else
         session.delete(:staff_member_id)
         flash.alert = 'セッションがタイムアウトしました'
