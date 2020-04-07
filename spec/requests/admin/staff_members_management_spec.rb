@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::StaffMembers', type: :request do
+  context 'ログイン前' do
+    include_examples 'a protected admin controller', 'admin/staff_members'
+  end
+end
+
+RSpec.describe 'Admin::StaffMembers', type: :request do
   let(:administrator) {create(:administrator)}
 
   before do
