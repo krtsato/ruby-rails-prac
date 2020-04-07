@@ -2,13 +2,31 @@
 
 require 'rails_helper'
 
-RSpec.describe Admin::StaffMembers, type: :request do
+RSpec.describe 'Admin::StaffMembers', type: :request do
   let(:administrator) {create(:administrator)}
+
+  before do |example|
+    unless example.metadata[:skip_before]
+      post admin_session_url, params: {
+        admin_login_form: {email: administrator.email, password: 'password'}
+      }
+    end
+  end
+
+  context 'when ログイン前', :skip_before do
+    include_examples 'a protected admin controller', 'admin/staff_members'
+  end
 
   describe '一覧' do
     example '成功' do
       get admin_staff_members_url
       expect(response.status).to eq(200)
+    end
+
+    example '停止フラグがセットされたら強制的にログアウト' do
+      administrator.update!(suspended: true)
+      get admin_staff_members_url
+      expect(response).to redirect_to(admin_root_url)
     end
   end
 
@@ -22,6 +40,12 @@ RSpec.describe Admin::StaffMembers, type: :request do
 
     example '例外 ActionController::ParameterMissing が発生' do
       expect {post admin_staff_members_url}.to raise_error(ActionController::ParameterMissing)
+    end
+
+    example 'セッションタイムアウト' do
+      travel_to Admin::Base::TIMEOUT.from_now.advance(seconds: 1)
+      get admin_staff_members_url
+      expect(response).to redirect_to(admin_login_url)
     end
   end
 
@@ -40,7 +64,7 @@ RSpec.describe Admin::StaffMembers, type: :request do
       params_hash.delete(:password)
       params_hash[:hashed_password] = 'x'
       expect {patch admin_staff_member_url(staff_member), params: {staff_member: params_hash}}.not_to \
-        change {staff_member.hashed_password.to_s}.to('x')
+        change(staff_member, :hashed_password.to_s)
     end
   end
 end

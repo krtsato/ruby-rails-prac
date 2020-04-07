@@ -3,10 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Staff::Account', type: :request do
-  before do
-    post staff_session_url, params: {
-      staff_login_form: {email: staff_member.email, password: 'password'}
-    }
+  before do |example|
+    unless example.metadata[:skip_before]
+      post staff_session_url, params: {
+        staff_login_form: {email: staff_member.email, password: 'password'}
+      }
+    end
+  end
+
+  context 'when ログイン前', :skip_before do
+    include_examples 'a protected singular staff controller', 'staff/accounts'
   end
 
   describe '情報表示' do
@@ -15,6 +21,18 @@ RSpec.describe 'Staff::Account', type: :request do
     example '成功' do
       get staff_account_url
       expect(response.status).to eq(200)
+    end
+
+    example '停止フラグがセットされたら強制的にログアウト' do
+      staff_member.update!(suspended: true)
+      get staff_account_url
+      expect(response).to redirect_to(staff_root_url)
+    end
+
+    example 'セッションタイムアウト' do
+      travel_to Staff::Base::TIMEOUT.from_now.advance(seconds: 1)
+      get staff_account_url
+      expect(response).to redirect_to(staff_login_url)
     end
   end
 

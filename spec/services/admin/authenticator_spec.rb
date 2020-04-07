@@ -6,7 +6,7 @@ RSpec.describe Admin::Authenticator do
   describe '#authenticate' do
     example '正しいパスワードならば true を返す' do
       a = build(:administrator)
-      expect(described_class.new(a).authenticate('pw')).to be_truthy
+      expect(described_class.new(a).authenticate('password')).to be_truthy
     end
 
     example '誤ったパスワードならば false を返す' do
@@ -21,7 +21,7 @@ RSpec.describe Admin::Authenticator do
 
     example '停止フラグが立っていても true を返す' do
       a = build(:administrator, suspended: true)
-      expect(described_class.new(a).authenticate('pw')).to be_truthy
+      expect(described_class.new(a).authenticate('password')).to be_truthy
     end
   end
 end
