@@ -306,7 +306,7 @@ append_spec_rails_helper() {
   readonly local ORIGINAL_TEXT="^require 'rspec\/rails'$"
   readonly local ORIGINAL_LINE_NUM=$(grep -n $ORIGINAL_TEXT $SPEC_RAILS_HELPER_DIR | cut -c 1)
   readonly local TARGET_LINE_NUM=$(($ORIGINAL_LINE_NUM + 1))
-  readonly local INSERTED_TEXT="Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each {|f| require f}"
+  readonly local INSERTED_TEXT="Dir[Rails.root.join('spec/support/**/*.rb')].sort.each {|f| require f}"
 
   # spec/support に shared_example・shared_context を配置する
   # BSD sed の行番号指定による挿入

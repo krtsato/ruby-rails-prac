@@ -3,18 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::StaffMembers', type: :request do
-  context 'ログイン前' do
-    include_examples 'a protected admin controller', 'admin/staff_members'
-  end
-end
-
-RSpec.describe 'Admin::StaffMembers', type: :request do
   let(:administrator) {create(:administrator)}
 
-  before do
-    post admin_session_url, params: {
-      admin_login_form: {email: administrator.email, password: 'password'}
-    }
+  before do |example|
+    unless example.metadata[:skip_before]
+      post admin_session_url, params: {
+        admin_login_form: {email: administrator.email, password: 'password'}
+      }
+    end
+  end
+
+  context 'when ログイン前', :skip_before do
+    include_examples 'a protected admin controller', 'admin/staff_members'
   end
 
   describe '一覧' do
