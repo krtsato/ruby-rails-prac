@@ -15,22 +15,19 @@ module Staff
 
     def create
       @form = LoginForm.new(login_form_params)
-      if @form.email.present? then staff_member = StaffMember.find_by('LOWER(email) = ?', @form.email.downcase) end
+      if @form.email.present?
+        staff_member = StaffMember.find_by('LOWER(email) = ?', @form.email.downcase)
+      end
 
       if Authenticator.new(staff_member).authenticate(@form.password)
-        if staff_member.suspended?
-          back_to_login_form('アカウントが停止されています')
-        else
-          session[:staff_member_id] = staff_member.id
-          session[:staff_last_access_time] = Time.current
-          go_to_staff_root('ログインしました')
-        end
+        divide_suspended_member(staff_member)
       else
         back_to_login_form('メールアドレスまたはパスワードが正しくありません')
       end
     end
 
     def destroy
+      current_staff_member&.events&.create!(type: 'logged_out')
       session.delete(:staff_member_id)
       go_to_staff_root('ログアウトしました')
     end
@@ -49,6 +46,18 @@ module Staff
     def back_to_login_form(alert_text)
       flash.now.alert = alert_text
       render action: 'new'
+    end
+
+    def divide_suspended_member(staff_member)
+      if staff_member.suspended?
+        staff_member.events.create!(type: 'rejected')
+        back_to_login_form('アカウントが停止されています')
+      else
+        session[:staff_member_id] = staff_member.id
+        session[:staff_last_access_time] = Time.current
+        staff_member.events.create!(type: 'logged_in')
+        go_to_staff_root('ログインしました')
+      end
     end
   end
 end
