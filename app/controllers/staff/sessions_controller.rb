@@ -20,7 +20,7 @@ module Staff
       end
 
       if Authenticator.new(staff_member).authenticate(@form.password)
-        divide_suspended_member(staff_member)
+        divide_suspended_record(staff_member)
       else
         back_to_login_form('メールアドレスまたはパスワードが正しくありません')
       end
@@ -48,7 +48,7 @@ module Staff
       render action: 'new'
     end
 
-    def divide_suspended_member(staff_member)
+    def divide_suspended_record(staff_member)
       if staff_member.suspended?
         staff_member.events.create!(type: 'rejected')
         back_to_login_form('アカウントが停止されています')
