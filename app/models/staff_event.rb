@@ -10,7 +10,7 @@ class StaffEvent < ApplicationRecord
     logged_in: 'ログイン',
     logged_out: 'ログアウト',
     rejected: 'ログイン拒否'
-  }
+  }.freeze
 
   def description
     DESCRIPTIONS[type.to_sym]
