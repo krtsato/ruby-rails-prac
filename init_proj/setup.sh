@@ -9,10 +9,11 @@ create_docker_compose
 create_dockerfile
 create_dockerignore
 create_gemfile
-mkdir -p config/environments config/initializers spec/factories spec/support
+mkdir -p config/environments config/initializers config/locales/views spec/factories spec/support
 create_config_application
 create_config_database
 create_config_init_blocked_hosts
+create_config_locales_views_paginate_ja
 create_rakefile
 create_rubocop_files
 
@@ -24,6 +25,8 @@ docker-compose run --rm web bash -c \
 && yarn check \
 && bundle exec rails db:create \
 && bundle exec rails g rspec:install \
+&& bundle exec rails g kaminari:config \
+&& bundle exec rails g kaminari:views default \
 && bundle exec rubocop --auto-gen-config"
 
 # Setup additional files after rails new

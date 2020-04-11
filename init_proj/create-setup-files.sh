@@ -278,6 +278,21 @@ end
 EOF
 }
 
+#################### config/locales/views/paginate.ja.yml ####################
+
+create_config_locales_views_paginate_ja() {
+  cat <<EOF > config/locales/views/paginate.ja.yml
+ja:
+  views:
+    pagination:
+      first: "先頭"
+      last: "末尾"
+      previous: "前"
+      next: "次"
+      truncate: "..."
+EOF
+}
+
 #################### Rakefile ####################
 
 create_rakefile() {
