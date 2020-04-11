@@ -15,16 +15,12 @@ module Admin
 
     def create
       @form = LoginForm.new(login_form_params)
-      if @form.email.present? then administrator = Administrator.find_by('LOWER(email) = ?', @form.email.downcase) end
+      if @form.email.present?
+        administrator = Administrator.find_by('LOWER(email) = ?', @form.email.downcase)
+      end
 
       if Authenticator.new(administrator).authenticate(@form.password)
-        if administrator.suspended?
-          back_to_login_form('アカウントが停止されています')
-        else
-          session[:administrator_id] = administrator.id
-          session[:admin_last_access_time] = Time.current
-          go_to_admin_root('ログインしました')
-        end
+        divide_suspended_record(administrator)
       else
         back_to_login_form('メールアドレスまたはパスワードが正しくありません')
       end
@@ -49,6 +45,16 @@ module Admin
     def back_to_login_form(alert_text)
       flash.now.alert = alert_text
       render action: 'new'
+    end
+
+    def divide_suspended_record(administrator)
+      if administrator.suspended?
+        back_to_login_form('アカウントが停止されています')
+      else
+        session[:administrator_id] = administrator.id
+        session[:admin_last_access_time] = Time.current
+        go_to_admin_root('ログインしました')
+      end
     end
   end
 end
