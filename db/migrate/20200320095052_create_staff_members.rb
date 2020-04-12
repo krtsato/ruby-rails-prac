@@ -14,7 +14,7 @@ class CreateStaffMembers < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :staff_members, "LOWER(email)", unique: true
+    add_index :staff_members, :email, unique: true
     add_index :staff_members, [:family_name_kana, :given_name_kana]
   end
 end
