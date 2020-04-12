@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_073244) do
     t.boolean "suspended", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "lower((email)::text)", name: "index_staff_members_on_LOWER_email", unique: true
+    t.index ["email"], name: "index_staff_members_on_email", unique: true
     t.index ["family_name_kana", "given_name_kana"], name: "index_staff_members_on_family_name_kana_and_given_name_kana"
   end
 

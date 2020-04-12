@@ -13,18 +13,18 @@ class StaffMember < ApplicationRecord
     self.given_name_kana = normalize_as_furigana(given_name_kana)
   end
 
-  KATAKANA_REGEXP = /\A[\p{katakana}\u{30fc}]+\z/
+  KATAKANA_REGEXP = /\A[\p{katakana}\u{30fc}]+\z/.freeze
   validates :email, presence: true, 'valid_email_2/email': true, uniqueness: {case_sensitive: false}
   validates :family_name, :given_name, presence: true
   validates :family_name_kana, :given_name_kana, presence: true, format: {with: KATAKANA_REGEXP, allow_blank: true}
   validates :start_date, presence: true, date: {
-    after_or_equal_to: Time.new(2020, 1, 1),
-    before: -> (obj) {1.year.from_now.to_date},
+    after_or_equal_to: Time.zone.local(2020, 1, 1),
+    before: -> (_obj) {1.year.from_now.to_date},
     allow_blank: true
   }
   validates :end_date, date: {
     after: :start_date,
-    before: -> (obj) {1.year.from_now.to_date},
+    before: -> (_obj) {1.year.from_now.to_date},
     allow_blank: true
   }
 
