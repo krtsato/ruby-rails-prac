@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_073244) do
     t.boolean "suspended", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "lower((email)::text)", name: "index_administrators_on_LOWER_email", unique: true
+    t.index ["email"], name: "index_administrators_on_email", unique: true
   end
 
   create_table "staff_events", force: :cascade do |t|
