@@ -54,6 +54,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
   - セッションタイムアウト
   - モデルの正規化・バリデーション
   - BCrypt によるパスワードのハッシュ化
+  - DB インデックスによるクエリ高速化
   - 名前空間に基づいたコード管理
   - タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
   - Issue 毎にブランチを切って実装完了後にプルリク・マージ
