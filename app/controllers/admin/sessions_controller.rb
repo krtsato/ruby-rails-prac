@@ -16,7 +16,7 @@ module Admin
     def create
       @form = LoginForm.new(login_form_params)
       if @form.email.present?
-        administrator = Administrator.find_by('LOWER(email) = ?', @form.email.downcase)
+        administrator = Administrator.find_by(email: @form.email.downcase)
       end
 
       if Authenticator.new(administrator).authenticate(@form.password)

@@ -16,7 +16,7 @@ module Staff
     def create
       @form = LoginForm.new(login_form_params)
       if @form.email.present?
-        staff_member = StaffMember.find_by('LOWER(email) = ?', @form.email.downcase)
+        staff_member = StaffMember.find_by(email: @form.email.downcase)
       end
 
       if Authenticator.new(staff_member).authenticate(@form.password)
