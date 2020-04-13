@@ -23,9 +23,38 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 
 ## 機能
 
-- 随時追加
-- タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
-- Issue 毎にブランチを切って実装完了後にプルリク・マージ
+- ユーザ認証・認可
+  - 管理者 : Administrator
+  - 職員 : StaffMember
+  - 顧客 : Customer
+- 管理者の機能
+  - 職員に対する CRUD
+  - 職員のログイン・ログアウト記録の閲覧
+  - ページネーション
+  - 職員の強制ログアウト
+- 職員の機能
+  - アカウント閲覧・編集
+  - N + 1 問題への対処
+- 顧客の機能
+  - アカウントの CRUD
+  - 任意入力への対応
+  - 電話番号への対応
+- Rails 独自の共通化機能
+  - フォームオブジェクト
+  - サービスオブジェクト
+  - ActiveSupport::Concern
+- RSpec・Capybara によるテスト
+  - shared_examples による共通化
+  - FactoryBot の活用
+  - できれば自動化したい…
+- その他
+  - エラーハンドリング
+  - セッションタイムアウト
+  - モデルの正規化・バリデーション
+  - BCrypt によるパスワードのハッシュ化
+  - 名前空間に基づいたコード管理
+  - タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
+  - Issue 毎にブランチを切って実装完了後にプルリク・マージ
 
 <br>
 
@@ -39,10 +68,9 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - Capybara
 - RuboCop
 - Webpacker
-- jQuery
 - ERB
 
-フロントエンドは今回の学習範囲に含めないため jQuery のコピペで済ませる．  
+フロントエンドは今回の学習範囲に含めないため Rails モノリスで仕上げる．
 なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
 
 <br>
@@ -83,7 +111,9 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
       - yarn check
       - rails db:create
       - rails g rspec:install
+      - rails g kaminari 関連
       - rubocop --auto-gen-config
+      - 自動生成後のファイル編集
       - 最終的に start-rails-server.sh を呼び出す
   - start-rails-server.sh
     - web サーバを起動する
@@ -109,5 +139,5 @@ Password: **********
 
 ```zsh
 # web サーバを起動する
-% docker-compose up -d web
+% docker-compose up -d
 ```
