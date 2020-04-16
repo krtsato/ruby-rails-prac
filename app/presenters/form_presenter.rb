@@ -29,7 +29,7 @@ class FormPresenter
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << text_field(input, options)
-      # m << error_messages_for(input)
+      m << error_messages_for(input)
     end
   end
 
@@ -38,7 +38,7 @@ class FormPresenter
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << password_field(input, options)
-      # m << error_messages_for(input)
+      m << error_messages_for(input)
     end
   end
 
@@ -47,7 +47,18 @@ class FormPresenter
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << date_field(input, options)
-      # m << error_messages_for(input)
+      m << error_messages_for(input)
+    end
+  end
+
+  # foge
+  def error_messages_for(input)
+    markup do |m|
+      object.errors.full_messages_for(input).each do |message|
+        m.div(class: 'error-message') do |m|
+          m.text message
+        end
+      end
     end
   end
 
