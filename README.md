@@ -44,6 +44,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - Rails 独自の共通化機能
   - フォームオブジェクト
   - サービスオブジェクト
+  - プレゼンタ
   - ActiveSupport::Concern
 - RSpec・Capybara によるテスト
   - shared_examples による共通化
