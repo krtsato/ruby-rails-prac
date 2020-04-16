@@ -9,11 +9,14 @@ create_docker_compose
 create_dockerfile
 create_dockerignore
 create_gemfile
-mkdir -p config/environments config/initializers config/locales/views spec/factories spec/support
+mkdir -p app/{forms,presenters,services} config/{environments,initializers,locales/views} lib/ spec/{factories,support}
+touch app/{forms,presenters,services}/.keep
+create_app_presenters_model_presenter
 create_config_application
 create_config_database
 create_config_init_blocked_hosts
 create_config_locales_views_paginate_ja
+create_lib_html_builder
 create_rakefile
 create_rubocop_files
 
