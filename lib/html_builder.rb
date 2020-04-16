@@ -14,6 +14,6 @@ module HtmlBuilder
       end
     end
 
-    sanitize(root.to_html, tags: %w[a table th tr td])
+    root.to_html.html_safe # rubocop:disable Rails/OutputSafety
   end
 end

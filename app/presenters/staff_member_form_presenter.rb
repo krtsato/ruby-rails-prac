@@ -4,7 +4,7 @@ class StaffMemberFormPresenter < FormPresenter
   # オーバーライド
   def password_field_block(input, label_text, options = {})
     if object.new_record?
-      super(name, label_text, options)
+      super(input, label_text, options)
     end
   end
 

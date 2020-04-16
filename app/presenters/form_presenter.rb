@@ -7,7 +7,7 @@ class FormPresenter
   attr_reader :form_builder, :view_context
 
   delegate \
-    :label, :text_field, :date_field, :password_field, :check_box, :radio_button, :text_area, :sanitize, :object,
+    :label, :text_field, :date_field, :password_field, :check_box, :radio_button, :text_area, :object,
     to: :form_builder
 
   # インスタンス化
@@ -29,7 +29,7 @@ class FormPresenter
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << text_field(input, options)
-      m << error_messages_for(input)
+      # m << error_messages_for(input)
     end
   end
 
@@ -38,7 +38,7 @@ class FormPresenter
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << password_field(input, options)
-      m << error_messages_for(input)
+      # m << error_messages_for(input)
     end
   end
 
@@ -47,10 +47,9 @@ class FormPresenter
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << date_field(input, options)
-      m << error_messages_for(input)
+      # m << error_messages_for(input)
     end
   end
-
 
   private
 
