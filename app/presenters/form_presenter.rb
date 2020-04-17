@@ -55,8 +55,8 @@ class FormPresenter
   def error_messages_for(input)
     markup do |m|
       object.errors.full_messages_for(input).each do |message|
-        m.div(class: 'error-message') do |m|
-          m.text message
+        m.div(class: 'error-message') do |n|
+          n.text message
         end
       end
     end
