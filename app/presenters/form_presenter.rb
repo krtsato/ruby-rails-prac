@@ -7,8 +7,8 @@ class FormPresenter
   attr_reader :form_builder, :view_context
 
   delegate \
-    :label, :text_field, :date_field, :password_field, :check_box, :radio_button, :text_area, :object,
-    to: :form_builder
+    :label, :text_field, :date_field, :password_field, :check_box,
+    :radio_button, :text_area, :select, :object, to: :form_builder
 
   # インスタンス化
   def initialize(form_builder, view_context)
@@ -51,7 +51,15 @@ class FormPresenter
     end
   end
 
-  # foge
+  def drop_down_list_block(input, label_text, choices, options = {})
+    markup(:div, class: "input-block") do |m|
+      m << decorated_label(input, label_text, options)
+      m << select(input, choices, {include_blank: true}, options)
+      m << error_messages_for(input)
+    end
+  end
+
+  # エラーメッセージ
   def error_messages_for(input)
     markup do |m|
       object.errors.full_messages_for(input).each do |message|

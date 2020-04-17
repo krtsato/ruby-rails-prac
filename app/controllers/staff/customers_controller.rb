@@ -7,5 +7,13 @@ module Staff
     def show
       @customer = Customer.find(params[:id])
     end
+
+    def new
+      @customer_form = CustomerForm.new
+    end
+
+    def edit
+      @customer_form = CustomerForm.new(Customer.find(params[:id]))
+    end
   end
 end
