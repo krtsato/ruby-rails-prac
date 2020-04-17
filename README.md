@@ -1,7 +1,5 @@
 # ruby-rails-rspec-prac
 
-※現在開発途中のため書きかけです．  
-
 サービス提供に付随する顧客管理システム．  
 
 Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．  
@@ -44,6 +42,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - Rails 独自の共通化機能
   - フォームオブジェクト
   - サービスオブジェクト
+  - プレゼンタ
   - ActiveSupport::Concern
 - RSpec・Capybara によるテスト
   - shared_examples による共通化
@@ -99,6 +98,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
       - Docker 関連
       - RuboCop 関連
       - config/ 配下の一部ファイル
+      - lib/ 配下の一部ファイル
       - Gemfile
       - Rakefile
       - .gitignore
