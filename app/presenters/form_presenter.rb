@@ -52,7 +52,7 @@ class FormPresenter
   end
 
   def drop_down_list_block(input, label_text, choices, options = {})
-    markup(:div, class: "input-block") do |m|
+    markup(:div, class: 'input-block') do |m|
       m << decorated_label(input, label_text, options)
       m << select(input, choices, {include_blank: true}, options)
       m << error_messages_for(input)

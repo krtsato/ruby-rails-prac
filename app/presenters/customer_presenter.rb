@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CustomerPresenter < ModelPresenter
   delegate :email, to: :object
 
@@ -10,16 +12,17 @@ class CustomerPresenter < ModelPresenter
   end
 
   def created_at
-    object.created_at.try(:strftime, "%Y/%m/%d %H:%M:%S")
+    object.created_at.try(:strftime, '%Y/%m/%d %H:%M:%S')
   end
 
   def updated_at
-    object.updated_at.try(:strftime, "%Y/%m/%d %H:%M:%S")
+    object.updated_at.try(:strftime, '%Y/%m/%d %H:%M:%S')
   end
 
   def birthday
     return '' if object.birthday.blank?
-    object.birthday.strftime("%Y/%m/%d")
+
+    object.birthday.strftime('%Y/%m/%d')
   end
 
   def gender

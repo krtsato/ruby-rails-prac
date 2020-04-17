@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CustomerFormPresenter < UserFormPresenter
   # 性別
   def gender_field_block
