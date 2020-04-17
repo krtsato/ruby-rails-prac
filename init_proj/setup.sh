@@ -17,6 +17,7 @@ create_config_database
 create_config_init_blocked_hosts
 create_config_locales_views_paginate_ja
 create_lib_html_builder
+create_lib_rails_routes
 create_rakefile
 create_rubocop_files
 

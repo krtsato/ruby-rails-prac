@@ -38,6 +38,12 @@ module Staff
       end
     end
 
+    def destroy
+      customer = Customer.find(params[:id])
+      customer.destroy!
+      go_to_staff_customer_root('顧客アカウントを削除しました')
+    end
+
     private
 
     def go_to_staff_customer_root(notice_text)
