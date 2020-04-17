@@ -43,6 +43,13 @@ company_names = %w[YaWhoo BeNA ShayberAgent]
       birthday: 60.years.ago.advance(seconds: rand(40.years)).to_date,
       gender: m < 5 ? 'male' : 'female'
     )
+    c.create_home_address!(
+      postal_code: sprintf("%07d", rand(10000000)),
+      prefecture: Address::PREFECTURE_NAMES.sample,
+      city: city_names.sample,
+      address1: "杜王町1-2-3",
+      address2: "シンデレラハイツ301号室"
+    )
     if m % 3 == 0
       c.create_work_address!(
         postal_code: sprintf('%07d', rand(10000000)),
