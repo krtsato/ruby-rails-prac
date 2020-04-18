@@ -21,14 +21,6 @@ module Staff
       customer.work_address.assign_attributes(work_address_params)
     end
 
-    def save
-      ActiveRecord::Base.transaction do
-        customer.save!
-        customer.home_address.save!
-        customer.work_address.save!
-      end
-    end
-
     private
 
     def customer_params

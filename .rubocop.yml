@@ -48,6 +48,8 @@ Metrics/MethodLength:
   Max: 15
 
 RSpec/ExampleLength:
+  Exclude:
+    - spec/features/**/*
   Max: 10
 
 Style/AsciiComments:
