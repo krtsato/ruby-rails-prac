@@ -21,20 +21,6 @@ module Staff
       customer.work_address.assign_attributes(work_address_params)
     end
 
-    def valid?
-      [customer customer.home_address, customer.work_address].map(&:valid?).all?
-    end
-
-    def save
-      return unless valid?
-
-      ActiveRecord::Base.transaction do
-        customer.save!
-        customer.home_address.save!
-        customer.work_address.save!
-      end
-    end
-
     private
 
     def customer_params

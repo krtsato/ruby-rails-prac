@@ -77,4 +77,19 @@ RSpec.describe '職員による顧客管理', type: :feature do
       expect(customer.work_address.company_name).to eq('テスト会社')
     end
   end
+
+  it '職員が生年月日と自宅の郵便番号に無効な値を入力する' do
+    click_link '顧客管理'
+    first('table.listing').click_link '編集'
+
+    fill_in '生年月日', with: '2100-01-01'
+    within('fieldset#home-address-fields') do
+      fill_in '郵便番号', with: 'XYZ'
+    end
+    click_button '更新'
+
+    expect(page).to have_css('header span.alert')
+    expect(page).to have_css('div.field_with_errors input#form_customer_birthday')
+    expect(page).to have_css('div.field_with_errors input#form_home_address_postal_code')
+  end
 end
