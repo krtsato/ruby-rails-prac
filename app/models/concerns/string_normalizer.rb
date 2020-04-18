@@ -18,6 +18,6 @@ module StringNormalizer
   end
 
   def normalize_as_postal_code(text)
-    NKF.nkf('-WwZ1', text).strip.gsub(/-/, '') if text
+    NKF.nkf('-WwZ1', text).strip.delete('-') if text
   end
 end

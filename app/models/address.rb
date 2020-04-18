@@ -2,7 +2,7 @@
 
 class Address < ApplicationRecord
   include StringNormalizer
-  
+
   belongs_to :customer
 
   before_validation do

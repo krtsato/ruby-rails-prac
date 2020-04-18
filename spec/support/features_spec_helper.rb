@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FeaturesSpecHelper
   def switch_namespace(namespace)
     config = Rails.application.config.rrrp
