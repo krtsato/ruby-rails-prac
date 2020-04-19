@@ -137,8 +137,16 @@ Password: **********
     - rrrp-web-cont
     - rrrp-db-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://example.com:3000](http://example.com:3000)
+    - [http://example.com:3000/admin](http://example.com:3000/admin)
     - [http://rrrp.example.com:3000](http://rrrp.example.com:3000)
+    - [http://rrrp.example.com:3000/mypage](http://rrrp.example.com:3000/mypage)
+  - テストデータ
+    - 管理者
+      - Eメール : hanako@example.com
+      - パスワード : password
+    - 職員
+      - Eメール : taro@example.com
+      - パスワード : password
 
 ```zsh
 # web サーバを起動する
