@@ -49,7 +49,7 @@ company_names = %w[YaWhoo BeNA ShayberAgent]
     end
     
     c.create_home_address!(
-      postal_code: sprintf("%07d", rand(10000000)),
+      postal_code: sprintf('%07d', rand(10000000)),
       prefecture: Address::PREFECTURE_NAMES.sample,
       city: city_names.sample,
       address1: '杜王町1-2-3',
