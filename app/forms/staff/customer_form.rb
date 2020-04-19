@@ -20,20 +20,10 @@ module Staff
       @params = params
       self.inputs_home_address = params[:inputs_home_address] == '1' # true: 1, false: 0
       self.inputs_work_address = params[:inputs_work_address] == '1' # true: 1, false, 0
-      
+
       customer.assign_attributes(customer_params)
-
-      if inputs_home_address
-        customer.home_address.assign_attributes(home_address_params)
-      else
-        customer.home_address.mark_for_destruction
-      end
-
-      if inputs_work_address
-        customer.work_address.assign_attributes(work_address_params)
-      else
-        customer.work_address.mark_for_destruction
-      end
+      home_address_assign_divider(inputs_home_address)
+      work_address_assign_divider(inputs_work_address)
     end
 
     private
@@ -53,6 +43,22 @@ module Staff
       @params.require(:work_address).permit(
         :postal_code, :prefecture, :city, :address1, :address2, :company_name, :division_name
       )
+    end
+
+    def home_address_assign_divider(is_home_address)
+      if is_home_address
+        customer.home_address.assign_attributes(home_address_params)
+      else
+        customer.home_address.mark_for_destruction
+      end
+    end
+
+    def work_address_assign_divider(is_work_address)
+      if is_work_address
+        customer.work_address.assign_attributes(work_address_params)
+      else
+        customer.work_address.mark_for_destruction
+      end
     end
   end
 end
