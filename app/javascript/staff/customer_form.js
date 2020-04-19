@@ -12,7 +12,7 @@ const toggle_work_address_fields = () => {
   $("fieldset#work-address-fields").toggle(checked);
 }
 
-$(document).on("ready turbolinks:load", () => {
+$(document).ready(() => {
   toggle_home_address_fields();
   toggle_work_address_fields();
   $("input#form_inputs_home_address").on("click", () => {

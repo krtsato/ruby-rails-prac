@@ -10,6 +10,12 @@ module Staff
     def initialize(customer = nil)
       @customer = customer
       @customer ||= Customer.new(gender: 'male')
+
+      # 電話番号の任意入力において不足分のモデルを追加
+      (2 - @customer.personal_phones.size).times do
+        @customer.personal_phones.build
+      end
+
       self.inputs_home_address = @customer.home_address.present?
       self.inputs_work_address = @customer.work_address.present?
       @customer.build_home_address unless @customer.home_address
@@ -22,6 +28,7 @@ module Staff
       self.inputs_work_address = params[:inputs_work_address] == '1' # true: 1, false, 0
 
       customer.assign_attributes(customer_params)
+      personal_phone_assign_divider()
       home_address_assign_divider(inputs_home_address)
       work_address_assign_divider(inputs_work_address)
     end
@@ -29,10 +36,7 @@ module Staff
     private
 
     def customer_params
-      @params.require(:customer).permit(
-        :email, :password, :family_name, :given_name,
-        :family_name_kana, :given_name_kana, :birthday, :gender
-      )
+      @params.require(:customer).except(:phones).permit(:email, :password)
     end
 
     def home_address_params
@@ -43,6 +47,10 @@ module Staff
       @params.require(:work_address).permit(
         :postal_code, :prefecture, :city, :address1, :address2, :company_name, :division_name
       )
+    end
+
+    def phone_params(record_name)
+      @params.require(record_name).slice(:phones).permit(phones: [:number, :primary])
     end
 
     def home_address_assign_divider(is_home_address)
@@ -58,6 +66,19 @@ module Staff
         customer.work_address.assign_attributes(work_address_params)
       else
         customer.work_address.mark_for_destruction
+      end
+    end
+
+    def personal_phone_assign_divider
+      phones = phone_params(:customer).fetch(:phones)
+
+      customer.personal_phones.size.times do |index|
+        attributes = phones[index.to_s]
+        if attributes && attributes[:number].present?
+          customer.personal_phones[index].assign_attributes(attributes)
+        else
+          customer.personal_phones[index].mark_for_destruction
+        end
       end
     end
   end
