@@ -10,18 +10,25 @@ module Staff
     def initialize(customer = nil)
       @customer = customer
       @customer ||= Customer.new(gender: 'male')
+
       self.inputs_home_address = @customer.home_address.present?
       self.inputs_work_address = @customer.work_address.present?
       @customer.build_home_address unless @customer.home_address
       @customer.build_work_address unless @customer.work_address
+
+      # 電話番号の任意入力において不足分のモデルオブジェクトを作成
+      build_blank_phone_numbers(@customer.personal_phones)
+      build_blank_phone_numbers(@customer.home_address.phones)
+      build_blank_phone_numbers(@customer.work_address.phones)
     end
 
     def assign_attributes(params = {})
       @params = params
-      self.inputs_home_address = params[:inputs_home_address] == '1' # true: 1, false: 0
-      self.inputs_work_address = params[:inputs_work_address] == '1' # true: 1, false, 0
+      self.inputs_home_address = params[:inputs_home_address] == '1'
+      self.inputs_work_address = params[:inputs_work_address] == '1'
 
       customer.assign_attributes(customer_params)
+      personal_phone_assign_divider
       home_address_assign_divider(inputs_home_address)
       work_address_assign_divider(inputs_work_address)
     end
@@ -29,25 +36,45 @@ module Staff
     private
 
     def customer_params
-      @params.require(:customer).permit(
+      @params.require(:customer).except(:phones).permit(
         :email, :password, :family_name, :given_name,
         :family_name_kana, :given_name_kana, :birthday, :gender
       )
     end
 
     def home_address_params
-      @params.require(:home_address).permit(:postal_code, :prefecture, :city, :address1, :address2)
+      @params.require(:home_address).except(:phones).permit(:postal_code, :prefecture, :city, :address1, :address2)
     end
 
     def work_address_params
-      @params.require(:work_address).permit(
+      @params.require(:work_address).except(:phones).permit(
         :postal_code, :prefecture, :city, :address1, :address2, :company_name, :division_name
       )
+    end
+
+    def phone_params(record_name)
+      @params.require(record_name).slice(:phones).permit(phones: %i[number primary])
+    end
+
+    def build_blank_phone_numbers(phones)
+      (2 - phones.size).times do
+        phones.build
+      end
     end
 
     def home_address_assign_divider(is_home_address)
       if is_home_address
         customer.home_address.assign_attributes(home_address_params)
+        phones = phone_params(:home_address).fetch(:phones)
+
+        customer.home_address.phones.size.times do |index|
+          attributes = phones[index.to_s]
+          if attributes && attributes[:number].present?
+            customer.home_address.phones[index].assign_attributes(attributes)
+          else
+            customer.home_address.phones[index].mark_for_destruction
+          end
+        end
       else
         customer.home_address.mark_for_destruction
       end
@@ -56,8 +83,31 @@ module Staff
     def work_address_assign_divider(is_work_address)
       if is_work_address
         customer.work_address.assign_attributes(work_address_params)
+        phones = phone_params(:work_address).fetch(:phones)
+
+        customer.work_address.phones.size.times do |index|
+          attributes = phones[index.to_s]
+          if attributes && attributes[:number].present?
+            customer.work_address.phones[index].assign_attributes(attributes)
+          else
+            customer.work_address.phones[index].mark_for_destruction
+          end
+        end
       else
         customer.work_address.mark_for_destruction
+      end
+    end
+
+    def personal_phone_assign_divider
+      phones = phone_params(:customer).fetch(:phones)
+
+      customer.personal_phones.size.times do |index|
+        attributes = phones[index.to_s]
+        if attributes && attributes[:number].present?
+          customer.personal_phones[index].assign_attributes(attributes)
+        else
+          customer.personal_phones[index].mark_for_destruction
+        end
       end
     end
   end

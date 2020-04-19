@@ -1,6 +1,7 @@
 # ruby-rails-rspec-prac
 
 サービス提供に付随する顧客管理システム．  
+ただいまデプロイ作業中．完了次第リンクを記載します．
 
 Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．  
 成果物から得られること
@@ -137,8 +138,16 @@ Password: **********
     - rrrp-web-cont
     - rrrp-db-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://example.com:3000](http://example.com:3000)
+    - [http://example.com:3000/admin](http://example.com:3000/admin)
     - [http://rrrp.example.com:3000](http://rrrp.example.com:3000)
+    - [http://rrrp.example.com:3000/mypage](http://rrrp.example.com:3000/mypage)
+  - テストデータ
+    - 管理者
+      - Eメール : hanako@example.com
+      - パスワード : password
+    - 職員
+      - Eメール : taro@example.com
+      - パスワード : password
 
 ```zsh
 # web サーバを起動する

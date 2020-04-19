@@ -70,8 +70,6 @@ class FormPresenter
     end
   end
 
-  private
-
   def decorated_label(input, label_text, options = {})
     label(input, label_text, class: options[:required] ? 'required' : nil)
   end
