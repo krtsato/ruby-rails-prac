@@ -12,13 +12,38 @@ RSpec.describe '職員による顧客管理', type: :feature do
     login_as_staff_member(staff_member)
   end
 
-  it '職員が顧客・自宅住所・勤務先を登録する' do
+  it '職員が顧客の基本情報のみを登録する' do
     aggregate_failures do
       # Given セクション
       click_link '顧客管理'
       first('div.links').click_link '新規登録'
 
       # When セクション
+      fill_in 'メールアドレス', with: 'test@example.jp'
+      fill_in 'パスワード', with: 'password'
+      fill_in 'form_customer_family_name', with: '霞ヶ丘'
+      fill_in 'form_customer_given_name', with: '詩羽'
+      fill_in 'form_customer_family_name_kana', with: 'カスミガオカ'
+      fill_in 'form_customer_given_name_kana', with: 'ウタハ'
+      fill_in '生年月日', with: '1995-01-31'
+      choose '女性'
+      click_button '登録'
+
+      # Then セクション
+      new_customer = Customer.order(:id).last
+      expect(new_customer.email).to eq('test@example.jp')
+      expect(new_customer.birthday).to eq(Time.zone.local(1995, 1, 31).to_date)
+      expect(new_customer.gender).to eq('female')
+      expect(new_customer.home_address).to be_nil
+      expect(new_customer.work_address).to be_nil
+    end
+  end
+
+  it '職員が顧客の基本情報・自宅住所・勤務先を登録する' do
+    aggregate_failures do
+      click_link '顧客管理'
+      first('div.links').click_link '新規登録'
+
       fill_in 'メールアドレス', with: 'test@example.jp'
       fill_in 'パスワード', with: 'password'
       fill_in 'form_customer_family_name', with: '加藤'
@@ -47,7 +72,6 @@ RSpec.describe '職員による顧客管理', type: :feature do
       end
       click_button '登録'
 
-      # Then セクション
       new_customer = Customer.order(:id).last
       expect(new_customer.email).to eq('test@example.jp')
       expect(new_customer.birthday).to eq(Time.zone.local(1996, 9, 23).to_date)
@@ -57,7 +81,7 @@ RSpec.describe '職員による顧客管理', type: :feature do
     end
   end
 
-  it '職員が顧客・自宅住所・勤務先を更新する' do
+  it '職員が顧客の基本情報・自宅住所・勤務先を更新する' do
     aggregate_failures do
       click_link '顧客管理'
       first('table.listing').click_link '編集'
@@ -93,5 +117,20 @@ RSpec.describe '職員による顧客管理', type: :feature do
       expect(page).to have_css('div.field_with_errors input#form_customer_birthday')
       expect(page).to have_css('div.field_with_errors input#form_home_address_postal_code')
     end
+  end
+
+  it '職員が勤務先データのない既存顧客に会社名を追加する' do
+    customer.work_address.destroy
+    click_link '顧客管理'
+    first('table.listing').click_link '編集'
+
+    check '勤務先を入力する'
+    within('fieldset#work-address-fields') do
+      fill_in '会社名', with: 'テスト会社'
+    end
+    click_button '更新'
+
+    customer.reload
+    expect(customer.work_address.company_name).to eq('テスト会社')
   end
 end
