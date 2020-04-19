@@ -20,4 +20,8 @@ module StringNormalizer
   def normalize_as_postal_code(text)
     NKF.nkf('-WwZ1', text).strip.delete('-') if text
   end
+
+  def normalize_as_phone_number(text)
+    NKF.nkf('-WwZ1', text).strip if text
+  end
 end
