@@ -8,7 +8,7 @@ FactoryBot.define do
     family_name_kana {'ヤマダ'}
     given_name_kana {'タロウ'}
     password {'pw'}
-    birthday {Date.new(1970, 1, 1)}
+    birthday {Time.zone.local(1970, 1, 1)}
     gender {'male'}
     association :home_address, strategy: :build
     association :work_address, strategy: :build

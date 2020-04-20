@@ -17,9 +17,9 @@ module Staff
       @customer.build_work_address unless @customer.work_address
 
       # 電話番号の任意入力において不足分のモデルオブジェクトを作成
-      build_blank_phone_numbers(@customer.personal_phones)
-      build_blank_phone_numbers(@customer.home_address.phones)
-      build_blank_phone_numbers(@customer.work_address.phones)
+      [@customer.personal_phones, @customer.home_address.phones, @customer.work_address.phones].each do |phones|
+        build_blank_phone_numbers(phones)
+      end
     end
 
     def assign_attributes(params = {})
@@ -62,19 +62,23 @@ module Staff
       end
     end
 
+    # ここどうにかする
+    def phone_number_assign_divider(customer_phones, fetched_phones)
+      customer_phones.size.times do |index|
+        attributes = fetched_phones[index.to_s]
+        if attributes && attributes[:number].present?
+          customer_phones[index].assign_attributes(attributes)
+        else
+          customer_phones[index].mark_for_destruction
+        end
+      end
+    end
+
     def home_address_assign_divider(is_home_address)
       if is_home_address
         customer.home_address.assign_attributes(home_address_params)
-        phones = phone_params(:home_address).fetch(:phones)
-
-        customer.home_address.phones.size.times do |index|
-          attributes = phones[index.to_s]
-          if attributes && attributes[:number].present?
-            customer.home_address.phones[index].assign_attributes(attributes)
-          else
-            customer.home_address.phones[index].mark_for_destruction
-          end
-        end
+        fetched_phones = phone_params(:home_address).fetch(:phones)
+        phone_number_assign_divider(customer.home_address.phones, fetched_phones)
       else
         customer.home_address.mark_for_destruction
       end
@@ -83,32 +87,16 @@ module Staff
     def work_address_assign_divider(is_work_address)
       if is_work_address
         customer.work_address.assign_attributes(work_address_params)
-        phones = phone_params(:work_address).fetch(:phones)
-
-        customer.work_address.phones.size.times do |index|
-          attributes = phones[index.to_s]
-          if attributes && attributes[:number].present?
-            customer.work_address.phones[index].assign_attributes(attributes)
-          else
-            customer.work_address.phones[index].mark_for_destruction
-          end
-        end
+        fetched_phones = phone_params(:work_address).fetch(:phones)
+        phone_number_assign_divider(customer.work_address.phones, fetched_phones)
       else
         customer.work_address.mark_for_destruction
       end
     end
 
     def personal_phone_assign_divider
-      phones = phone_params(:customer).fetch(:phones)
-
-      customer.personal_phones.size.times do |index|
-        attributes = phones[index.to_s]
-        if attributes && attributes[:number].present?
-          customer.personal_phones[index].assign_attributes(attributes)
-        else
-          customer.personal_phones[index].mark_for_destruction
-        end
-      end
+      fetched_phones = phone_params(:customer).fetch(:phones)
+      phone_number_assign_divider(customer.personal_phones, fetched_phones)
     end
   end
 end
