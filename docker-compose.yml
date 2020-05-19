@@ -36,7 +36,19 @@ services:
       - .:/proj-cont
       - ./vendor/bundle:/usr/local/bundle
       - ./node_modules:/proj-cont/node_modules
+      - ./tmp:/proj-cont/tmp
+      - ./public:/proj-cont/public
     ports:
       - 3000:3000 # Rails
       - 3001:3001 # webpack-dev-server
     tty: true
+
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
+    container_name: rrrp-nginx-cont
+    ports:
+      - 80:80
+    depends_on:
+      - web
