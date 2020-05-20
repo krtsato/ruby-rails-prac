@@ -48,7 +48,8 @@ services:
       context: ./nginx/
       dockerfile: Dockerfile
     container_name: rrrp-nginx-cont
-    ports:
-      - 80:80
     depends_on:
       - web
+    image: rrrp-nginx-img
+    ports:
+      - 80:80
