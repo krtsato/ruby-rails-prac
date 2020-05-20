@@ -64,6 +64,8 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 ## 環境
 
 - Docker
+- Puma
+- Nginx
 - Ruby
 - Rails
 - PostgreSQL
@@ -72,6 +74,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - RuboCop
 - Webpacker
 - ERB
+- AWS (Route53, ACM, ALB, EC2)
 
 フロントエンドは今回の学習範囲に含めないため Rails モノリスで仕上げる．
 なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
@@ -138,9 +141,9 @@ Password: **********
     - rrrp-web-cont
     - rrrp-db-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://example.com:3000/admin](http://example.com:3000/admin)
-    - [http://rrrp.example.com:3000](http://rrrp.example.com:3000)
-    - [http://rrrp.example.com:3000/mypage](http://rrrp.example.com:3000/mypage)
+    - [http://rrrp.customer-manage.work:3000/admin](http://rrrp.customer-manage.work:3000/admin)
+    - [http://rrrp.customer-manage.work:3000/](http://rrrp.customer-manage.work:3000/)
+    - [http://customer-manage.work:3000/mypage](http://customer-manage.work:3000/mypage)
   - テストデータ
     - 管理者
       - Eメール : hanako@example.com
@@ -150,6 +153,6 @@ Password: **********
       - パスワード : password
 
 ```zsh
-# web サーバを起動する
+# サーバを起動する
 % docker-compose up -d
 ```
