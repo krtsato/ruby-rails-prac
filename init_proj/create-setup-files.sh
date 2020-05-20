@@ -416,7 +416,7 @@ EOF
 append_etc_host() {
   sudo zsh -c "cat >> /etc/hosts" <<EOF
 # Added by ruby-rails-rspec-prac
-127.0.0.1 example.com rrrp.example.com
+127.0.0.1 customer-manage.work rrrp.customer-manage.work
 # End of section
 EOF
 }
