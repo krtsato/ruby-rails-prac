@@ -13,4 +13,4 @@ docker-compose run --rm web bash -c \
 && bundle exec rails db:seed RAILS_ENV=production \
 && bundle exec rails assets:precompile RAILS_ENV=production"
 
-docker-compose up
+docker-compose up -d
