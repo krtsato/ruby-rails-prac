@@ -6,8 +6,11 @@ set -ex
 chmod -R +x init_proj/
 source init_proj/create-files/create-setup-files.sh
 create_docker_compose
-create_dockerfile
+create_dockerfile_db
+create_dockerfile_nginx
+create_dockerfile_web
 create_dockerignore
+create_nginx_conf
 create_gemfile
 touch Gemfile.lock
 mkdir -p app/{forms,presenters,services} config/{environments,initializers,locales/views} lib/ spec/{factories,support}
@@ -35,6 +38,7 @@ docker-compose run --rm web bash -c \
 && bundle exec rubocop --auto-gen-config"
 
 # Setup additional files after rails new
+append_config_puma
 append_config_env_dev
 append_spec_rails_helper
 append_etc_host

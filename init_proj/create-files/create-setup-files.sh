@@ -7,11 +7,14 @@ create_docker_compose() {
 version: '3.7'
 services:
   db:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-db
     container_name: rrrp-db-cont
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
-    image: postgres:12.2-alpine
+    image: rrrp-db-img
     ports:
       - 5432:5432
     volumes:
@@ -20,7 +23,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfiles/Dockerfile-web
     container_name: rrrp-web-cont
     depends_on:
       - db
@@ -42,22 +45,65 @@ services:
       - .:/proj-cont
       - ./vendor/bundle:/usr/local/bundle
       - ./node_modules:/proj-cont/node_modules
+      - ./tmp:/proj-cont/tmp
+      - ./public:/proj-cont/public
     ports:
       - 3000:3000 # Rails
       - 3001:3001 # webpack-dev-server
     tty: true
+
+  nginx:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-nginx
+    container_name: rrrp-nginx-cont
+    depends_on:
+      - web
+    image: rrrp-nginx-img
+    ports:
+      - 80:80
 EOF
 }
 
 #################### Dockerfile ####################
 
-create_dockerfile() {
-  cat <<EOF > Dockerfile
+create_dockerfile_web() {
+  cat <<EOF > dockerfiles/Dockerfile-db
+FROM postgres:12.2-alpine
+
+# default values can be checked in EC2 (Amazon Linux 2)
+ARG GID=1001
+ARG UID=1001
+
+RUN addgroup -g $GID db-cont-gp \
+&& adduser -u $UID -G db-cont-gp -D db-cont-usr \
+&& echo "db-cont-usr ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER db-cont-usr
+EOF
+}
+
+create_dockerfile_nginx() {
+  cat <<EOF > dockerfiles/Dockerfile-nginx
+FROM nginx:1.18.0-alpine
+
+WORKDIR /proj-cont
+
+RUN rm -f ~/etc/nginx/conf.d/*
+COPY nginx.conf ~/etc/nginx/conf.d/proj-cont.conf
+
+# The path to nginx.conf starts from "/etc/nginx/"
+CMD ["nginx", "-c", "nginx.conf", "-g", "daemon off;"]
+EOF
+}
+
+create_dockerfile_web() {
+  cat <<EOF > dockerfiles/Dockerfile-web
 FROM ruby:2.7.0-alpine3.11
 
 WORKDIR /proj-cont
 
-COPY init_proj/create-rc-files.sh .
+COPY init_proj/create-files/create-rc-files.sh .
 
 RUN set -ox pipefail \
   && ./create-rc-files.sh \
@@ -70,7 +116,7 @@ RUN set -ox pipefail \
 
 COPY . .
 
-CMD ["init_proj/start-rails-server.sh"]
+CMD ["init_proj/start-server/start-puma-server.sh"]
 EOF
 }
 
@@ -87,6 +133,54 @@ create_dockerignore() {
 **/npm-debug.log
 README.md
 yarn-error.log
+EOF
+}
+
+#################### Nginx ####################
+
+create_nginx_conf() {
+  cat <<EOF > nginx.conf
+# referenced from https://github.com/puma/puma/blob/master/docs/nginx.md
+
+upstream proj-cont {
+  server unix:///proj-cont/tmp/sockets/puma.sock;
+}
+
+server {
+  listen 80;
+  server_name customer-manage.work;
+
+  keepalive_timeout 5;
+
+  # static files
+  root /proj-cont/public;
+
+  location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+
+    # static files
+    if (-f $request_filename) {
+      break;
+    }
+    if (-f $request_filename.html) {
+      rewrite (.*) $1/index.html break;
+    }
+    if (-f $request_filename.html) {
+      rewrite (.*) $1.html break;
+    }
+
+    if (!-f $request_filename) {
+      proxy_pass http://proj-cont;
+      break;
+    }
+  }
+
+  location ~* \.(ico|css|gif|jpe?g|png|js)(\?[0-9]+)?$ {
+    expires max;
+    break;
+  }
+}
 EOF
 }
 
@@ -140,7 +234,7 @@ EOF
 
 #################### app/presenters/model_presenter.rb ####################
 
-create_app_presenters_model_presenter(){
+create_app_presenters_model_presenter() {
   cat <<EOF > app/presenters/model_presenter.rb
 require 'html_builder'
 
@@ -270,6 +364,17 @@ module RubyRailsRSepcPrac
     config.generators.system_tests = nil
   end
 end
+EOF
+}
+
+#################### config/puma.rb ####################
+
+append_config_puma() {
+  cat <<EOF > config/puma.rb
+
+# sockets connection between nginx and puma
+proj_root = File.expand_path("../..", __FILE__)
+bind "unix://#{proj_root}/tmp/sockets/puma.sock"
 EOF
 }
 
