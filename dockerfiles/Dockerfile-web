@@ -2,7 +2,7 @@ FROM ruby:2.7.0-alpine3.11
 
 WORKDIR /proj-cont
 
-COPY init_proj/create-rc-files.sh .
+COPY init_proj/create-files/create-rc-files.sh .
 
 RUN set -ox pipefail \
   && ./create-rc-files.sh \
@@ -15,4 +15,4 @@ RUN set -ox pipefail \
 
 COPY . .
 
-CMD ["init_proj/start-rails-server.sh"]
+CMD ["init_proj/start-server/start-puma-server.sh"]
