@@ -39,7 +39,7 @@ services:
       - .:/proj-cont
       - ./vendor/bundle:/usr/local/bundle
       - ./node_modules:/proj-cont/node_modules
-      - ./tmp:/proj-cont/tmp
+      - ./tmp/sockets:/proj-cont/tmp/sockets
       - ./public:/proj-cont/public
     ports:
       - 3000:3000 # Rails
