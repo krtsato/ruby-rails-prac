@@ -6,9 +6,9 @@ set -ex
 chmod -R +x init_proj/
 source init_proj/create-files/create-setup-files.sh
 create_docker_compose
-create_dockerfile_db
-create_dockerfile_nginx
-create_dockerfile_web
+create_dockerfiles_db
+create_dockerfiles_nginx
+create_dockerfiles_web
 create_dockerignore
 create_nginx_conf
 create_gemfile

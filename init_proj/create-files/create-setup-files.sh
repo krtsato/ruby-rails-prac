@@ -9,7 +9,7 @@ services:
   db:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-db
+      dockerfile: dockerfiles/db/Dockerfile
     container_name: rrrp-db-cont
     environment:
       - POSTGRES_USER
@@ -23,7 +23,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-web
+      dockerfile: dockerfiles/web/Dockerfile
     container_name: rrrp-web-cont
     depends_on:
       - db
@@ -55,7 +55,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile-nginx
+      dockerfile: dockerfiles/nginx/Dockerfile
     container_name: rrrp-nginx-cont
     depends_on:
       - web
@@ -68,7 +68,7 @@ EOF
 #################### Dockerfile ####################
 
 create_dockerfile_web() {
-  cat <<EOF > dockerfiles/Dockerfile-db
+  cat <<EOF > dockerfiles/db/Dockerfile
 FROM postgres:12.2-alpine
 
 # default values can be checked in EC2 (Amazon Linux 2)
@@ -84,7 +84,7 @@ EOF
 }
 
 create_dockerfile_nginx() {
-  cat <<EOF > dockerfiles/Dockerfile-nginx
+  cat <<EOF > dockerfiles/nginx/Dockerfile
 FROM nginx:1.18.0-alpine
 
 WORKDIR /proj-cont
@@ -98,7 +98,7 @@ EOF
 }
 
 create_dockerfile_web() {
-  cat <<EOF > dockerfiles/Dockerfile-web
+  cat <<EOF > dockerfiles/web/Dockerfile
 FROM ruby:2.7.0-alpine3.11
 
 WORKDIR /proj-cont
