@@ -55,7 +55,6 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
   - モデルの正規化・バリデーション
   - BCrypt によるパスワードのハッシュ化
   - DB インデックスによるクエリ高速化
-  - 名前空間に基づいたコード管理
   - タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
   - Issue 毎にブランチを切って実装完了後にプルリク・マージ
 
@@ -121,16 +120,17 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
       - rails g kaminari 関連
       - rubocop --auto-gen-config
       - 自動生成後のファイル編集
-      - 最終的に start-rails-server.sh を呼び出す
-  - start-rails-server.sh
+      - 最終的に start-puma-server.sh を呼び出す
+  - start-puma-server.sh
+    - db コンテナが起動しているか確認する
     - web サーバを起動する
       - bundle check
       - pid ファイルの削除
-      - rails s
+      - puma の起動
 
 ```zsh
-# init_proj/*.sh と .env を配置後
-% ./init_proj/setup.sh
+# init_proj/ 配下と .env を配置後
+% ./init_proj/setup/setup-dev.sh
 
 # 途中で入力する
 Password: **********
@@ -138,11 +138,12 @@ Password: **********
 
 - 構築後の確認
   - コンテナ
-    - rrrp-web-cont
     - rrrp-db-cont
+    - rrrp-nginx-cont
+    - rrrp-web-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://rrrp.customer-manage.work:3000/admin](http://rrrp.customer-manage.work:3000/admin)
-    - [http://rrrp.customer-manage.work:3000/](http://rrrp.customer-manage.work:3000/)
+    - [http://customer-manage.work:3000/admin](http://customer-manage.work:3000/admin)
+    - [http://customer-manage.work:3000/](http://customer-manage.work:3000/)
     - [http://customer-manage.work:3000/mypage](http://customer-manage.work:3000/mypage)
   - テストデータ
     - 管理者
