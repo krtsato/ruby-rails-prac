@@ -74,7 +74,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - RuboCop
 - Webpacker
 - ERB
-- AWS (Route53, ACM, ALB, EC2)
+- AWS (ACM, ALB, EC2, RDS)
 
 フロントエンドは今回の学習範囲に含めないため Rails モノリスで仕上げる．
 なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
