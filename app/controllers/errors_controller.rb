@@ -1,17 +1,25 @@
 # frozen_string_literal: true
 
-class ErrorsController < ApplicationController
-  layout 'staff'
+class ErrorsController < Base
+  helper_method :current_staff_member
 
   def not_found
-    render status: 404
+    render 'errors/not_found', status: 404
   end
 
   def unprocessable_entity
-    render status: 422
+    render 'errors/unprocessable_entity', status: 422
   end
 
   def internal_server_error
-    render status: 500
+    render 'errors/internal_server_error', status: 500
+  end
+
+  private
+
+  def current_staff_member
+    return if session[:staff_member_id].blank?
+
+    @current_staff_member ||= StaffMember.find_by(id: session[:staff_member_id])
   end
 end
