@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ErrorsController < Base
+class ErrorsController < ApplicationController
   helper_method :current_staff_member
 
   def not_found
