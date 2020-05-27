@@ -35,16 +35,15 @@ services:
       - RUBYOPT
       - TZ
     image: rrrp-web-img
+    ports:
+      - 3000:3000
+    tty: true
     volumes:
       - .:/proj-cont
       - ./vendor/bundle:/usr/local/bundle
       - ./node_modules:/proj-cont/node_modules
       - ./tmp/sockets:/proj-cont/tmp/sockets
       - ./public:/proj-cont/public
-    ports:
-      - 3000:3000 # Rails
-      - 3001:3001 # webpack-dev-server
-    tty: true
 
   nginx:
     build:
@@ -56,3 +55,26 @@ services:
     image: rrrp-nginx-img
     ports:
       - 80:80
+    volumes:
+      - type: bind
+        source: ./tmp/sockets
+        target: /proj-cont/tmp/sockets
+      - type: bind
+        source: ./public
+        target: /proj-cont/public
+
+# トップレベルの名前付きボリュームを
+# ホストマシン上にマウントする場合
+# 
+# services: 
+#   web:
+#     volumes:
+#       - sockets:/proj-cont/tmp/sockets
+#       - public:/proj-cont/public
+#   nginx:
+#     volumes:
+#       - sockets:/proj-cont/tmp/sockets
+#       - public:/proj-cont/public
+# volumes:
+#   sockets:
+#   public:
