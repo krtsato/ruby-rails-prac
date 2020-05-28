@@ -1,9 +1,11 @@
 # ruby-rails-rspec-prac
 
-サービス提供に付随する顧客管理システム．  
+サービス自体ではなく，それに付随する顧客管理システムの制作．
 
-Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．  
-[成果物](https://rrrp.customer-manage.work) から得られること
+Ruby 2.7 on Rails 6.0 でサーバサイドを学習した．  
+モデル間で発生する CRUD や Rails 特有の機能を把握した．
+
+[成果物](#成果物)から得られること
 
 - チュートリアル以上の実践的な Rails の使い方
   - 詳細は [references/ruby-rails/rails-proc.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-proc.md) を参照
@@ -15,9 +17,25 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 
 リポジトリ概要
 
+- [成果物](#成果物)
 - [機能](#機能)
 - [環境](#環境)
 - [環境構築](#環境構築)
+  - [development 環境](#development-環境)
+  - [production 環境](#production-環境)
+
+<br>
+
+## 成果物
+
+- [https://rrrp.customer-manage.work](https://rrrp.customer-manage.work)
+- ログインデータ
+  - 管理者
+    - E メール : hanako@example.com
+    - パスワード : password
+  - 職員
+    - E メール : taro@example.com
+    - パスワード : password
 
 <br>
 
@@ -73,7 +91,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - ERB
 - AWS (ACM, ALB, EC2, RDS)
 
-フロントエンドは今回の学習範囲に含めないため Rails モノリスで仕上げる．
+フロントエンドは今回の学習範囲に含めないため Rails モノリスで仕上げる．  
 なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
 
 AWS は初学のためシンプルな構成にまとめた．  
@@ -152,13 +170,6 @@ Password: **********
     - [http://rrrp.customer-manage.work:3000/admin](http://rrrp.customer-manage.work:3000/admin)
     - [http://rrrp.customer-manage.work:3000/](http://rrrp.customer-manage.work:3000/)
     - [http://rrrp.customer-manage.work:3000/mypage](http://rrrp.customer-manage.work:3000/mypage)
-  - テストデータ
-    - 管理者
-      - Eメール : hanako@example.com
-      - パスワード : password
-    - 職員
-      - Eメール : taro@example.com
-      - パスワード : password
 
 ```zsh
 # サーバを起動する
@@ -167,7 +178,7 @@ Password: **********
 
 <br>
 
-## production 環境
+### production 環境
 
 - 初回起動の場合
   - `bundle install -j4`
