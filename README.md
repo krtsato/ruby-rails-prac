@@ -1,10 +1,9 @@
 # ruby-rails-rspec-prac
 
 サービス提供に付随する顧客管理システム．  
-ただいまデプロイ作業中．完了次第リンクを記載します．
 
 Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．  
-成果物から得られること
+[成果物](https://rrrp.customer-manage.work) から得られること
 
 - チュートリアル以上の実践的な Rails の使い方
   - 詳細は [references/ruby-rails/rails-proc.md](https://github.com/krtsato/references/blob/master/ruby-rails/rails-proc.md) を参照
@@ -48,7 +47,6 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 - RSpec・Capybara によるテスト
   - shared_examples による共通化
   - FactoryBot の活用
-  - できれば自動化したい…
 - その他
   - エラーハンドリング
   - セッションタイムアウト
@@ -78,9 +76,16 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
 フロントエンドは今回の学習範囲に含めないため Rails モノリスで仕上げる．
 なお，モダンなフロントエンドの構成・設計については [react-redux-ts-prac](https://github.com/krtsato/react-redux-ts-prac) および [redux-arch](https://github.com/krtsato/references/blob/master/react-redux-ts/redux-arch.md) を参照されたい．
 
+AWS は初学のためシンプルな構成にまとめた．  
+EC2 上で docker-compose を展開し HTTPS 通信で Rails に繋げる．
+
+![rrrp-aws](https://user-images.githubusercontent.com/32429977/83172936-48905f00-a153-11ea-8daf-7a48cbe038a5.png)
+
 <br>
 
 ## 環境構築
+
+### development 環境
 
 - 要件
   - init_proj 配下のシェルスクリプト
@@ -91,9 +96,10 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
     - 普段は zsh を使うが Docker 内で Linux 標準の bash を動かしたかった
 
 - 注意
-  - アプリの性質上 macOS における /etc/hosts に追記する
-    - ローカルで稼働させない場合は追記箇所を削除する
+  - 開発環境では，アプリの性質上 macOS における /etc/hosts に追記する
     - ルート権限を行使するため，シェルスクリプトが一時停止したときパスワードを入力する
+  - 本番環境に対して mac からアクセスする前に，追記箇所を削除する
+    - お名前.com に登録した DNS の参照ができくなるため
 
 - 実行内容
   - create-setup-files.sh
@@ -104,6 +110,7 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを勉強するために作成．
       - lib/ 配下の一部ファイル
       - Gemfile
       - Rakefile
+      - nginx.conf
       - .gitignore
   - create-rc-files.sh
     - コンテナのホームディレクトリに rc ファイルを生成する
@@ -142,9 +149,9 @@ Password: **********
     - rrrp-nginx-cont
     - rrrp-web-cont
   - ブラウザから以下のアドレスにアクセスする
-    - [http://customer-manage.work:3000/admin](http://customer-manage.work:3000/admin)
-    - [http://customer-manage.work:3000/](http://customer-manage.work:3000/)
-    - [http://customer-manage.work:3000/mypage](http://customer-manage.work:3000/mypage)
+    - [http://rrrp.customer-manage.work:3000/admin](http://rrrp.customer-manage.work:3000/admin)
+    - [http://rrrp.customer-manage.work:3000/](http://rrrp.customer-manage.work:3000/)
+    - [http://rrrp.customer-manage.work:3000/mypage](http://rrrp.customer-manage.work:3000/mypage)
   - テストデータ
     - 管理者
       - Eメール : hanako@example.com
@@ -156,4 +163,21 @@ Password: **********
 ```zsh
 # サーバを起動する
 % docker-compose up -d
+```
+
+<br>
+
+## production 環境
+
+- 初回起動の場合
+  - `bundle install -j4`
+  - `db:create`
+  - `db:migrate`
+  - `db:seed`
+  - `assets:precompile`
+- 最終的に `docker-compose up -d`
+
+```zsh
+# Puma, Nginx, PostgreSQL を起動する
+$ ./init_proj/setup/setup-prod.sh
 ```
