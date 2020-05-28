@@ -135,7 +135,7 @@ EC2 上で docker-compose を展開し HTTPS 通信で Rails に繋げる．
       - .gemrc
       - .psqlrc
     - Dockerfile 内で実行される
-  - setup.sh
+  - setup-dev.sh
     - 環境構築のメインスレッド
       - bundle install
       - rails new
@@ -180,13 +180,14 @@ Password: **********
 
 ### production 環境
 
-- 初回起動の場合
-  - `bundle install -j4`
-  - `db:create`
-  - `db:migrate`
-  - `db:seed`
-  - `assets:precompile`
-- 最終的に `docker-compose up -d`
+- setup-prod.sh
+  - 初回起動の場合
+    - `bundle install -j4`
+    - `db:create`
+    - `db:migrate`
+    - `db:seed`
+    - `assets:precompile`
+  - 最終的に `docker-compose up -d`
 
 ```zsh
 # Puma, Nginx, PostgreSQL を起動する
