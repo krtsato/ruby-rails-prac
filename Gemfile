@@ -12,7 +12,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bcrypt'
 gem 'rails-i18n'
-gem 'kaminari'
+gem 'kaminari', ">= 1.2.1"
 gem 'date_validator'
 gem 'valid_email2'
 gem 'nokogiri'
