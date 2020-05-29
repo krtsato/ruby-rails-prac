@@ -28,12 +28,13 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを学習した．
 
 ## 成果物
 
-- [https://rrrp.customer-manage.work](https://rrrp.customer-manage.work)
 - ログインデータ
   - 管理者
+    - [https://rrrp.customer-manage.work/admin](https://rrrp.customer-manage.work/admin)
     - E メール : hanako@example.com
     - パスワード : password
   - 職員
+    - [https://rrrp.customer-manage.work](https://rrrp.customer-manage.work)
     - E メール : taro@example.com
     - パスワード : password
 
