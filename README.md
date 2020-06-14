@@ -42,7 +42,8 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを学習した．
 
 ## 機能
 
-- ユーザ認証・認可
+- 簡易的なユーザ認証・認可
+  - BCrypt によるパスワードのハッシュ化
   - 管理者 : Administrator
   - 職員 : StaffMember
   - 顧客 : Customer
@@ -65,7 +66,6 @@ Ruby 2.7 on Rails 6.0 でサーバサイドを学習した．
   - エラーハンドリング
   - セッションタイムアウト
   - モデルの正規化・バリデーション
-  - BCrypt によるパスワードのハッシュ化
   - ページネーション
   - DB インデックスによるクエリ高速化
   - タスク は [Issue](https://github.com/krtsato/ruby-rails-rspec-prac/issues) で管理する
